@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KnotLink — 本地应用协作通信协议</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- ===== 导航栏 ===== -->
+    <nav class="navbar">
+        <div class="container nav-inner">
+            <a href="#" class="nav-brand">
+                <img src="logo.png" alt="KnotLink" class="nav-logo-small">
+                <span>KnotLink</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#whoami">我是谁？</a></li>
+                <li><a href="nodes.html">节点</a></li>
+                <li><a href="recipes.html">配方</a></li>
+                <li><a href="scenarios.html">场景</a></li>
+                <li><a href="https://github.com/KnotLink-Protocol" target="_blank">GitHub</a></li>
+                <li><a href="tutorials.html" class="btn-nav">快速开始</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ===== Hero / 首屏 ===== -->
+    <section class="hero">
+        <div class="container hero-grid">
+            <div class="hero-text">
+                <p class="hero-brand">KnotLink 协议 <span class="stage-badge">早期阶段</span></p>
+                <h1 class="hero-tagline">本地应用协作通信</h1>
+                <p class="hero-desc">
+                    让不同语言，不同架构的本地应用<br>用统一的格式相互调用功能。
+                </p>
+                <div class="hero-actions">
+                    <a href="tutorials.html" class="btn btn-primary">五分钟上手</a>
+                    <a href="#" class="btn btn-outline">查看文档</a>
+                </div>
+            </div>
+            <div class="hero-logo">
+                <img src="logo.png" alt="KnotLink Logo" class="hero-logo-img">
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 我是谁？===== -->
+    <section class="section whoami" id="whoami">
+        <div class="container">
+            <h2 class="section-title">我是谁？</h2>
+            <p class="section-subtitle">无论你是什么角色，KnotLink 都有适合你的入口</p>
+            <div class="identity-cards">
+                <!-- 卡片 1：用户 -->
+                <div class="identity-card">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <circle cx="12" cy="8" r="4"/>
+                            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+                        </svg>
+                    </div>
+                    <h3>我是<span class="highlight">用户</span></h3>
+                    <p>我要配置应用协作配方，浏览教程，让本地应用高效联动。</p>
+                    <ul class="card-features">
+                        <li>📖 浏览配方教程</li>
+                        <li>⚙️ 一键配置配方</li>
+                        <li>🔗 连接本地应用</li>
+                    </ul>
+                    <a href="tutorials.html" class="btn btn-card">配配方 · 看教程</a>
+                </div>
+
+                <!-- 卡片 2：开发者 -->
+                <div class="identity-card card-featured">
+                    <div class="card-badge">推荐</div>
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <polyline points="16 18 22 12 16 6"/>
+                            <polyline points="8 6 2 12 8 18"/>
+                        </svg>
+                    </div>
+                    <h3>我是<span class="highlight">开发者</span></h3>
+                    <p>我要接入 KnotLink，五分钟快速上手，让我的应用支持跨语言调用。</p>
+                    <ul class="card-features">
+                        <li>🚀 五分钟快速接入</li>
+                        <li>🛠️ 多语言 SDK 支持</li>
+                        <li>🔬 协议早期，你的反馈直接影响规范走向</li>
+                    </ul>
+                    <a href="tutorials.html" class="btn btn-primary btn-card">我要接入 · 五分钟上手</a>
+                </div>
+
+                <!-- 卡片 3：评估者 -->
+                <div class="identity-card">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <line x1="18" y1="20" x2="18" y2="10"/>
+                            <line x1="12" y1="20" x2="12" y2="4"/>
+                            <line x1="6" y1="20" x2="6" y2="14"/>
+                        </svg>
+                    </div>
+                    <h3>我在<span class="highlight">评估方案</span></h3>
+                    <p>我要对比 KnotLink 与其他方案，了解技术选型的优劣。</p>
+                    <ul class="card-features">
+                        <li>📊 方案横向对比</li>
+                        <li>🏗️ 架构深度解析</li>
+                        <li>✅ 适用场景评估</li>
+                    </ul>
+                    <a href="compare.html" class="btn btn-card">我要对比 · 方案对比</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 节点接入 ===== -->
+    <section class="section nodes-section" id="nodes">
+        <div class="container">
+            <div class="section-header-row">
+                <div>
+                    <h2 class="section-title">10+ 节点接入</h2>
+                    <p class="section-subtitle">覆盖主流开发语言与运行时，持续增长中</p>
+                </div>
+                <a href="nodes.html" class="btn btn-outline btn-index">查看节点索引 →</a>
+            </div>
+
+            <!-- 图标墙 -->
+            <div class="icon-wall" id="nodeIconWall">
+                <!-- JS 动态生成 -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 互联配方 ===== -->
+    <section class="section recipes-section" id="recipes">
+        <div class="container">
+            <div class="section-header-row">
+                <div>
+                    <h2 class="section-title">100+ 互联配方</h2>
+                    <p class="section-subtitle">开箱即用的应用协作模板，覆盖常见场景</p>
+                </div>
+                <a href="recipes.html" class="btn btn-primary btn-index">进入配方中心 →</a>
+            </div>
+
+            <!-- 配方墙 -->
+            <div class="recipe-wall" id="recipeWall">
+                <!-- JS 动态生成 -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 典型场景 ===== -->
+    <section class="section scenarios-section" id="scenarios">
+        <div class="container">
+            <h2 class="section-title">典型场景</h2>
+            <p class="section-subtitle">KnotLink 在真实工作流中的表现</p>
+
+            <div class="scenario-grid">
+                <div class="scenario-card">
+                    <div class="scenario-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect x="2" y="3" width="20" height="14" rx="2"/>
+                            <line x1="8" y1="21" x2="16" y2="21"/>
+                            <line x1="12" y1="17" x2="12" y2="21"/>
+                        </svg>
+                    </div>
+                    <h3>AI 调用本地工具</h3>
+                    <p>让 AI 应用直接调用本地的 IDE、数据库工具、文件管理器等，打通 AI 与本地生态。</p>
+                    <div class="scenario-tags">
+                        <span>LLM</span><span>工具链</span><span>自动化</span>
+                    </div>
+                </div>
+
+                <div class="scenario-card">
+                    <div class="scenario-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                        </svg>
+                    </div>
+                    <h3>跨语言微服务编排</h3>
+                    <p>Python 脚本调用 Go 服务，Node.js 调用 Rust 模块——统一协议，无缝衔接。</p>
+                    <div class="scenario-tags">
+                        <span>微服务</span><span>多语言</span><span>编排</span>
+                    </div>
+                </div>
+
+                <div class="scenario-card">
+                    <div class="scenario-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                    </div>
+                    <h3>桌面自动化工作流</h3>
+                    <p>将多个桌面应用串联成自动化流水线：截图→OCR→翻译→回填，一气呵成。</p>
+                    <div class="scenario-tags">
+                        <span>桌面</span><span>自动化</span><span>工作流</span>
+                    </div>
+                </div>
+
+                <div class="scenario-card">
+                    <div class="scenario-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect x="3" y="3" width="18" height="18" rx="3"/>
+                            <line x1="3" y1="9" x2="21" y2="9"/>
+                            <line x1="9" y1="21" x2="9" y2="9"/>
+                        </svg>
+                    </div>
+                    <h3>本地数据处理管道</h3>
+                    <p>Excel → Python 清洗 → R 分析 → 可视化工具——数据在不同应用间自动流转。</p>
+                    <div class="scenario-tags">
+                        <span>数据</span><span>ETL</span><span>可视化</span>
+                    </div>
+                </div>
+
+                <div class="scenario-card">
+                    <div class="scenario-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                            <line x1="12" y1="22.08" x2="12" y2="12"/>
+                        </svg>
+                    </div>
+                    <h3>开发环境深度集成</h3>
+                    <p>编辑器 ↔ 终端 ↔ 调试器 ↔ 版本控制，打通开发四件套，提升编码体验。</p>
+                    <div class="scenario-tags">
+                        <span>IDE</span><span>DevOps</span><span>集成</span>
+                    </div>
+                </div>
+
+                <div class="scenario-card">
+                    <div class="scenario-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                    </div>
+                    <h3>多角色协同工作</h3>
+                    <p>设计师、开发者和数据分析师各自用熟悉的工具，通过 KnotLink 实现数据互通。</p>
+                    <div class="scenario-tags">
+                        <span>协同</span><span>跨角色</span><span>互通</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 开源生态 ===== -->
+    <section class="section" style="padding-bottom:60px">
+        <div class="container">
+            <h2 class="section-title">开源生态</h2>
+            <p class="section-subtitle">协议早期，全部开源在 GitHub，欢迎参与贡献</p>
+            <div class="repo-grid">
+                <a href="https://github.com/KnotLink-Protocol/KnotLink" target="_blank" class="repo-card">
+                    <div class="repo-icon">🔧</div>
+                    <h4>KnotLink</h4>
+                    <p>协议核心</p>
+                    <span class="repo-lang">MIT</span>
+                </a>
+                <a href="https://github.com/KnotLink-Protocol/KnotLinkSDK" target="_blank" class="repo-card">
+                    <div class="repo-icon">📦</div>
+                    <h4>KnotLinkSDK</h4>
+                    <p>SDK for KnotLink</p>
+                    <span class="repo-lang">Python · MIT</span>
+                </a>
+                <a href="https://github.com/KnotLink-Protocol/NodeLink" target="_blank" class="repo-card">
+                    <div class="repo-icon">🔗</div>
+                    <h4>NodeLink</h4>
+                    <p>TypeScript 节点连接库</p>
+                    <span class="repo-lang">TypeScript · GPL v3</span>
+                </a>
+                <a href="https://github.com/KnotLink-Protocol/KNodeIndex" target="_blank" class="repo-card">
+                    <div class="repo-icon">📋</div>
+                    <h4>KNodeIndex</h4>
+                    <p>节点索引 · 提交你的节点</p>
+                    <span class="repo-lang">提交 PR →</span>
+                </a>
+                <a href="https://github.com/KnotLink-Protocol/KnotLinkDocuments" target="_blank" class="repo-card">
+                    <div class="repo-icon">📖</div>
+                    <h4>KnotLinkDocuments</h4>
+                    <p>文档</p>
+                    <span class="repo-lang">JavaScript</span>
+                </a>
+                <a href="https://github.com/KnotLink-Protocol/KnotHub" target="_blank" class="repo-card">
+                    <div class="repo-icon">🧠</div>
+                    <h4>KnotHub</h4>
+                    <p>节点管理器</p>
+                    <span class="repo-lang">C++ · Private</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CTA 横幅 ===== -->
+    <section class="section cta-section">
+        <div class="container">
+            <div class="cta-box">
+                <h2>准备好连接你的应用了吗？</h2>
+                <p>五分钟接入 KnotLink，开启本地应用协作新时代。</p>
+                <div class="cta-actions">
+                    <a href="tutorials.html" class="btn btn-primary btn-lg">免费开始使用</a>
+                    <a href="#" class="btn btn-outline btn-lg">阅读文档</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 页脚 ===== -->
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <img src="logo.png" alt="KnotLink" class="footer-logo">
+                <p>KnotLink — 本地应用协作通信协议</p>
+            </div>
+            <div class="footer-links">
+                <h4>产品</h4>
+                <a href="nodes.html">节点索引</a>
+                <a href="recipes.html">配方中心</a>
+                <a href="scenarios.html">典型场景</a>
+            </div>
+            <div class="footer-links">
+                <h4>开发者</h4>
+                <a href="#">文档</a>
+                <a href="#">SDK</a>
+                <a href="#">API 参考</a>
+            </div>
+            <div class="footer-links">
+                <h4>关于</h4>
+                <a href="compare.html">方案对比</a>
+                <a href="https://github.com/KnotLink-Protocol" target="_blank">GitHub</a>
+                <a href="#">社区</a>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <p>&copy; 2025 KnotLink. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="nodes-data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

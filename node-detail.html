@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">节点详情 — KnotLink</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .page-hero { padding: 120px 0 40px; }
+        .breadcrumb { color: var(--color-text-muted); font-size: 0.85rem; margin-bottom: 28px; }
+        .breadcrumb a { color: var(--color-text-dim); transition: color .2s; }
+        .breadcrumb a:hover { color: var(--color-text); }
+
+        .node-hero { display: flex; gap: 28px; align-items: flex-start; margin-bottom: 40px; flex-wrap: wrap; }
+        .node-hero-logo { width: 96px; height: 96px; border-radius: var(--radius-lg); object-fit: contain; background: rgba(255,255,255,.04); border: 1px solid var(--color-border); flex-shrink: 0; }
+        .node-hero-logo-placeholder { width: 96px; height: 96px; border-radius: var(--radius-lg); background: rgba(229, 165, 10,.1); display: flex; align-items: center; justify-content: center; font-size: 3rem; flex-shrink: 0; border: 1px solid var(--color-border); }
+        .node-hero-info { flex: 1; min-width: 280px; }
+        .node-hero-info h1 { font-size: 2.2rem; font-weight: 800; margin-bottom: 6px; letter-spacing: -0.5px; }
+        .node-hero-meta { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; margin-bottom: 12px; font-size: 0.9rem; color: var(--color-text-dim); }
+        .node-hero-meta .badge { padding: 4px 12px; border-radius: 99px; font-size: 0.78rem; font-weight: 700; }
+        .badge-plugin { background: rgba(229, 165, 10,.15); color: var(--color-accent); }
+        .badge-standalone { background: rgba(52,211,153,.15); color: var(--color-green); }
+        .node-hero-desc { font-size: 1.05rem; color: var(--color-text-dim); line-height: 1.8; max-width: 720px; }
+
+        .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 48px; }
+        .detail-card { background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 28px; }
+        .detail-card.full-width { grid-column: 1 / -1; }
+        .detail-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+
+        .socket-list { display: flex; flex-direction: column; gap: 14px; }
+        .socket-item { background: var(--color-bg-alt); border-radius: var(--radius-md); padding: 18px; border: 1px solid var(--color-border); }
+        .socket-item .socket-name { font-family: var(--font-mono); font-size: 0.95rem; font-weight: 700; color: var(--color-accent); margin-bottom: 4px; }
+        .socket-item .socket-id { font-size: 0.75rem; color: var(--color-text-muted); font-family: var(--font-mono); margin-bottom: 6px; }
+        .socket-item .socket-desc { font-size: 0.86rem; color: var(--color-text-dim); line-height: 1.6; margin-bottom: 10px; }
+
+        .arg-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+        .arg-table th { text-align: left; padding: 6px 10px; color: var(--color-text-muted); font-weight: 600; font-size: 0.74rem; border-bottom: 1px solid var(--color-border); }
+        .arg-table td { padding: 6px 10px; color: var(--color-text-dim); border-bottom: 1px solid rgba(255,255,255,.03); font-family: var(--font-mono); }
+        .arg-table td.arg-name { color: var(--color-accent); }
+
+        .features-list { display: flex; flex-wrap: wrap; gap: 8px; }
+        .features-list span { padding: 4px 12px; border-radius: 99px; font-size: 0.8rem; background: rgba(229, 165, 10,.08); color: var(--color-accent); border: 1px solid rgba(229, 165, 10,.15); }
+
+        .info-table { width: 100%; font-size: 0.88rem; }
+        .info-table tr { border-bottom: 1px solid rgba(255,255,255,.03); }
+        .info-table td { padding: 10px 0; }
+        .info-table td:first-child { color: var(--color-text-muted); width: 120px; font-weight: 600; }
+        .info-table td:last-child { color: var(--color-text-dim); font-family: var(--font-mono); font-size: 0.82rem; }
+
+        .node-404 { text-align: center; padding: 120px 20px; }
+        .node-404 .big-icon { font-size: 4rem; margin-bottom: 16px; }
+        .node-404 h2 { font-size: 1.8rem; margin-bottom: 8px; }
+        .node-404 p { color: var(--color-text-dim); margin-bottom: 24px; }
+
+        /* README 渲染样式 — 不统一格式，只管基础排版 */
+        .readme-section { background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: 40px 48px; margin-bottom: 48px; }
+        .readme-section h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--color-border); }
+        .readme-content { color: var(--color-text-dim); line-height: 1.85; font-size: 0.93rem; }
+        .readme-content h1 { font-size: 1.8rem; font-weight: 800; color: var(--color-text); margin: 32px 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--color-border); }
+        .readme-content h2 { font-size: 1.4rem; font-weight: 700; color: var(--color-text); margin: 28px 0 10px; }
+        .readme-content h3 { font-size: 1.1rem; font-weight: 700; color: var(--color-text); margin: 20px 0 8px; border: none; padding: 0; }
+        .readme-content p { margin-bottom: 14px; }
+        .readme-content ul, .readme-content ol { margin: 8px 0 16px 20px; }
+        .readme-content li { margin-bottom: 4px; }
+        .readme-content strong { color: var(--color-text); }
+        .readme-content code { background: var(--color-bg-alt); padding: 2px 8px; border-radius: 4px; font-family: var(--font-mono); font-size: 0.85rem; color: var(--color-accent); }
+        .readme-content pre { background: var(--color-bg-alt); padding: 18px 20px; border-radius: var(--radius-md); overflow-x: auto; margin: 14px 0; border: 1px solid var(--color-border); }
+        .readme-content pre code { background: none; padding: 0; color: var(--color-text-dim); font-size: 0.82rem; line-height: 1.7; }
+        .readme-content table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 0.85rem; }
+        .readme-content th { background: var(--color-bg-alt); padding: 10px 14px; text-align: left; font-weight: 700; border: 1px solid var(--color-border); }
+        .readme-content td { padding: 8px 14px; border: 1px solid var(--color-border); }
+        .readme-content a { color: var(--color-accent); text-decoration: underline; }
+        .readme-content blockquote { border-left: 3px solid var(--color-accent); padding: 8px 16px; margin: 14px 0; background: rgba(229, 165, 10,.05); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; color: var(--color-text-dim); }
+        .readme-content hr { border: none; border-top: 1px solid var(--color-border); margin: 24px 0; }
+        .readme-content img { max-width: 100%; border-radius: var(--radius-md); }
+
+        @media (max-width: 768px) { .detail-grid { grid-template-columns: 1fr; } .node-hero-logo, .node-hero-logo-placeholder { width: 72px; height: 72px; } .readme-section { padding: 24px 20px; } }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="container nav-inner">
+        <a href="index.html" class="nav-brand">
+            <img src="logo.png" alt="KnotLink" class="nav-logo-small">
+            <span>KnotLink</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="nodes.html">节点</a></li>
+            <li><a href="recipes.html">配方</a></li>
+            <li><a href="scenarios.html">场景</a></li>
+            <li><a href="tutorials.html" class="btn-nav">快速开始</a></li>
+        </ul>
+    </div>
+</nav>
+
+<section class="page-hero" id="nodeDetail">
+    <!-- JS 动态渲染 -->
+</section>
+
+<section class="section" style="padding-top:0">
+    <div class="container" id="nodeContent">
+        <!-- JS 动态渲染 -->
+    </div>
+</section>
+
+<section class="section cta-section">
+    <div class="container">
+        <div class="cta-box">
+            <h2>想贡献类似节点？</h2>
+            <p>将你的应用封装为 KnotLink 节点，让其他应用发现并调用。</p>
+            <div class="cta-actions">
+                <a href="#" class="btn btn-primary btn-lg">📦 提交节点</a>
+                <a href="nodes.html" class="btn btn-outline btn-lg">返回节点索引</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container footer-grid">
+        <div class="footer-brand">
+            <img src="logo.png" alt="KnotLink" class="footer-logo">
+            <p>KnotLink — 本地应用协作通信协议</p>
+        </div>
+        <div class="footer-links">
+            <h4>产品</h4>
+            <a href="nodes.html">节点索引</a>
+            <a href="recipes.html">配方中心</a>
+            <a href="scenarios.html">典型场景</a>
+        </div>
+        <div class="footer-links">
+            <h4>开发者</h4>
+            <a href="#">文档</a>
+            <a href="#">SDK</a>
+            <a href="#">API 参考</a>
+        </div>
+        <div class="footer-links">
+            <h4>关于</h4>
+            <a href="compare.html">方案对比</a>
+            <a href="#">GitHub</a>
+            <a href="#">社区</a>
+        </div>
+    </div>
+    <div class="container footer-bottom">
+        <p>&copy; 2025 KnotLink. All rights reserved.</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="nodes-data.js"></script>
+<script>
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// =============================================
+// Parse URL param & find node
+// =============================================
+const params = new URLSearchParams(window.location.search);
+const nodeId = params.get('id');
+const allNodes = window.__KNOTLINK_NODES__ || [];
+const node = allNodes.find(n => n.id === nodeId);
+
+// =============================================
+// 404 state
+// =============================================
+if (!node) {
+    document.getElementById('nodeDetail').innerHTML = `
+        <div class="container">
+            <div class="node-404">
+                <div class="big-icon">🔍</div>
+                <h2>节点未找到</h2>
+                <p>${nodeId ? `未找到 ID 为 "${nodeId}" 的节点。` : '未指定节点 ID。'}</p>
+                <a href="nodes.html" class="btn btn-primary">返回节点索引</a>
+            </div>
+        </div>`;
+    document.getElementById('nodeContent').innerHTML = '';
+    document.getElementById('pageTitle').textContent = '节点未找到 — KnotLink';
+} else {
+    // =============================================
+    // Render node detail
+    // =============================================
+
+    // Page title
+    document.getElementById('pageTitle').textContent = `${node.name} — KnotLink 节点`;
+
+    // Hero
+    const typeBadgeClass = node.type === 'plugin' ? 'badge-plugin' : 'badge-standalone';
+    const features = node.features || [];
+
+    document.getElementById('nodeDetail').innerHTML = `
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">首页</a> / <a href="nodes.html">节点索引</a> / <strong>${node.name}</strong>
+            </div>
+            <div class="node-hero">
+                ${node.logo
+                    ? `<img src="${node.logo}" alt="${node.name}" class="node-hero-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="node-hero-logo-placeholder" style="display:none">${node.typeIcon || '🧩'}</div>`
+                    : `<div class="node-hero-logo-placeholder">${node.typeIcon || '🧩'}</div>`
+                }
+                <div class="node-hero-info">
+                    <h1>${node.name}</h1>
+                    <div class="node-hero-meta">
+                        <span class="badge ${typeBadgeClass}">${node.typeIcon || ''} ${node.typeLabel || node.type}</span>
+                        ${node.author ? `<span>👤 ${node.author}</span>` : ''}
+                        ${node.version ? `<span>📦 ${node.version}</span>` : ''}
+                        ${node.appId ? `<span style="font-family:var(--font-mono)">🆔 ${node.appId}</span>` : ''}
+                    </div>
+                    <p class="node-hero-desc">${node.desc || '暂无描述'}</p>
+                </div>
+            </div>
+        </div>`;
+
+    // Detail content
+    const sockets = node.sockets || [];
+    const signals = node.signals || [];
+    const hasInterfaces = sockets.length > 0 || signals.length > 0;
+
+    let detailHTML = `<div class="detail-grid">`;
+
+    // Socket interfaces
+    if (sockets.length > 0) {
+        detailHTML += `
+        <div class="detail-card ${signals.length === 0 ? 'full-width' : ''}">
+            <h3>📡 OpenSocket 接口 (${sockets.length})</h3>
+            <div class="socket-list">
+                ${sockets.map(s => {
+                    const hasArgs = s.args && s.args.length > 0;
+                    const hasReturns = s.returns && s.returns.length > 0;
+                    return `
+                    <div class="socket-item">
+                        <div class="socket-name">${s.name}</div>
+                        <div class="socket-id">OpenSocketID: ${s.id}</div>
+                        <div class="socket-desc">${s.desc || '无描述'}</div>
+                        ${hasArgs ? `
+                            <table class="arg-table">
+                                <thead><tr><th>参数</th><th>类型</th><th>说明</th><th>默认值</th></tr></thead>
+                                <tbody>
+                                    ${s.args.map(a => `
+                                        <tr>
+                                            <td class="arg-name">${a.name}</td>
+                                            <td>${a.type}</td>
+                                            <td>${a.desc || '-'}</td>
+                                            <td>${a.default || '-'}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        ` : '<div style="font-size:0.8rem;color:var(--color-text-muted);margin-top:4px">无参数</div>'}
+                        ${hasReturns ? `
+                            <div style="margin-top:10px;font-weight:600;font-size:0.78rem;color:var(--color-text)">↩ 返回值</div>
+                            <table class="arg-table" style="margin-top:4px">
+                                <thead><tr><th>字段名</th><th>说明</th></tr></thead>
+                                <tbody>
+                                    ${s.returns.map(r => {
+                                        // returns 是 [description, fieldName] 元组数组
+                                        const desc = Array.isArray(r) ? r[0] : r;
+                                        const name = Array.isArray(r) ? r[1] : '';
+                                        return `
+                                        <tr>
+                                            <td class="arg-name">${name || '-'}</td>
+                                            <td>${desc || '-'}</td>
+                                        </tr>`;
+                                    }).join('')}
+                                </tbody>
+                            </table>
+                        ` : ''}
+                    </div>`;
+                }).join('')}
+            </div>
+        </div>`;
+    }
+
+    // Signal interfaces
+    if (signals.length > 0) {
+        detailHTML += `
+        <div class="detail-card ${sockets.length === 0 ? 'full-width' : ''}">
+            <h3>📶 信号 (${signals.length})</h3>
+            <div class="socket-list">
+                ${signals.map(s => {
+                    const hasReturns = s.returns && s.returns.length > 0;
+                    return `
+                    <div class="socket-item">
+                        <div class="socket-name">${s.name}</div>
+                        <div class="socket-id">SignalID: ${s.signalId || '-'}${s.appId ? ` · AppID ${s.appId}` : ''}</div>
+                        <div class="socket-desc">${s.desc || ''}</div>
+                        ${hasReturns ? `
+                            <div style="margin-top:10px;font-weight:600;font-size:0.78rem;color:var(--color-text)">📤 信号参数</div>
+                            <table class="arg-table" style="margin-top:4px">
+                                <thead><tr><th>字段名</th><th>说明</th><th>校验值</th></tr></thead>
+                                <tbody>
+                                    ${s.returns.map(r => `
+                                        <tr>
+                                            <td class="arg-name">${r.name}</td>
+                                            <td>${r.desc || '-'}</td>
+                                            <td>${r.verification || '-'}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        ` : ''}
+                    </div>`;
+                }).join('')}
+            </div>
+        </div>`;
+    }
+
+    // Feature list
+    if (features.length > 0) {
+        detailHTML += `
+        <div class="detail-card ${!hasInterfaces ? 'full-width' : ''}">
+            <h3>✨ 功能特性</h3>
+            <div class="features-list">
+                ${features.map(f => `<span>${f}</span>`).join('')}
+            </div>
+        </div>`;
+    }
+
+    // Technical info
+    detailHTML += `
+        <div class="detail-card ${!hasInterfaces && features.length === 0 ? 'full-width' : ''}">
+            <h3>🔧 技术信息</h3>
+            <table class="info-table">
+                <tr><td>节点 ID</td><td>${node.id}</td></tr>
+                <tr><td>类型</td><td>${node.typeLabel || node.type} (${node.type})</td></tr>
+                ${node.appId ? `<tr><td>App ID</td><td>${node.appId}</td></tr>` : ''}
+                ${node.appName ? `<tr><td>应用名</td><td>${node.appName}</td></tr>` : ''}
+                ${node.author ? `<tr><td>作者</td><td>${node.author}</td></tr>` : ''}
+                ${node.version ? `<tr><td>版本</td><td>${node.version}</td></tr>` : ''}
+                ${node.exePath ? `<tr><td>可执行文件</td><td>${node.exePath}</td></tr>` : ''}
+                ${node.autoStart !== undefined ? `<tr><td>开机自启</td><td>${node.autoStart === 'true' ? '✅ 是' : '❌ 否'}</td></tr>` : ''}
+                ${node.dir ? `<tr><td>目录</td><td>nodes/${node.dir}</td></tr>` : ''}
+            </table>
+        </div>
+    </div>`;
+
+    document.getElementById('nodeContent').innerHTML = detailHTML;
+
+    // =============================================
+    // README 渲染 — 完整保留原始文档
+    // =============================================
+    if (node.readme) {
+        const readmeContainer = document.createElement('div');
+        readmeContainer.className = 'readme-section';
+        readmeContainer.innerHTML = '<h3>📖 README</h3>';
+
+        const readmeBody = document.createElement('div');
+        readmeBody.className = 'readme-content';
+
+        // 用 marked.js 渲染 markdown（格式不统一也能正确渲染）
+        if (typeof marked !== 'undefined') {
+            // 去掉一级标题（通常重复节点名），调整标题层级
+            let md = node.readme;
+            // 如果第一行是 # 标题，去掉避免重复
+            md = md.replace(/^# .+\n/, '');
+            readmeBody.innerHTML = marked.parse(md);
+        } else {
+            // 回退: 显示原始文本
+            readmeBody.innerHTML = `<pre style="white-space:pre-wrap;font-family:var(--font-mono);font-size:0.82rem;line-height:1.7">${escapeHtml(node.readme)}</pre>`;
+        }
+
+        readmeContainer.appendChild(readmeBody);
+        document.getElementById('nodeContent').appendChild(readmeContainer);
+    }
+}
+</script>
+</body>
+</html>

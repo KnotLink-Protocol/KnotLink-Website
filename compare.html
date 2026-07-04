@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>方案对比 — KnotLink</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .page-hero { padding: 120px 0 60px; text-align: center; }
+        .page-hero h1 { font-size: 2.6rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 12px; }
+        .page-hero p { color: var(--color-text-dim); font-size: 1.1rem; max-width: 560px; margin: 0 auto; }
+
+        .compare-table-wrap { overflow-x: auto; margin-bottom: 64px; border-radius: var(--radius-lg); border: 1px solid var(--color-border); }
+        .compare-table { width: 100%; border-collapse: collapse; min-width: 720px; }
+        .compare-table th, .compare-table td { padding: 16px 20px; text-align: left; }
+        .compare-table thead th { background: var(--color-bg-card); font-weight: 700; font-size: 0.92rem; border-bottom: 1px solid var(--color-border); }
+        .compare-table thead th:first-child { border-radius: var(--radius-lg) 0 0 0; }
+        .compare-table thead th.highlight-col { background: rgba(229, 165, 10,.12); color: var(--color-accent); }
+        .compare-table tbody td { border-bottom: 1px solid var(--color-border); font-size: 0.9rem; color: var(--color-text-dim); }
+        .compare-table tbody tr:hover td { background: rgba(255,255,255,.02); }
+        .compare-table .feat-name { font-weight: 600; color: var(--color-text); }
+        .check { color: var(--color-green); font-weight: 700; }
+        .cross { color: var(--color-text-muted); }
+        .partial { color: var(--color-orange); }
+
+        .insight-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 64px; }
+        .insight-card { background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 28px; }
+        .insight-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+        .insight-card p { font-size: 0.88rem; color: var(--color-text-dim); line-height: 1.7; }
+
+        @media (max-width: 768px) { .insight-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="container nav-inner">
+        <a href="index.html" class="nav-brand">
+            <img src="logo.png" alt="KnotLink" class="nav-logo-small">
+            <span>KnotLink</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="nodes.html">节点</a></li>
+            <li><a href="recipes.html">配方</a></li>
+            <li><a href="scenarios.html">场景</a></li>
+            <li><a href="tutorials.html" class="btn-nav">快速开始</a></li>
+        </ul>
+    </div>
+</nav>
+
+<section class="page-hero">
+    <div class="container">
+        <h1>📊 方案对比</h1>
+        <p>全面对比 KnotLink 与其他本地应用通信方案，帮你做出最佳技术选型。</p>
+    </div>
+</section>
+
+<section class="section" style="padding-top:0">
+    <div class="container">
+
+        <h2 class="section-title">核心功能对比</h2>
+        <p class="section-subtitle">KnotLink vs 传统方案：一次看清差异</p>
+
+        <div class="compare-table-wrap">
+            <table class="compare-table">
+                <thead>
+                    <tr>
+                        <th>能力维度</th>
+                        <th class="highlight-col">🔗 KnotLink</th>
+                        <th>REST API</th>
+                        <th>gRPC</th>
+                        <th>消息队列</th>
+                        <th>Pipe/Stdio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td class="feat-name">跨语言支持</td><td class="check">✅ 原生支持</td><td class="check">✅</td><td class="check">✅</td><td class="check">✅</td><td class="partial">⚠️ 有限</td></tr>
+                    <tr><td class="feat-name">统一调用格式</td><td class="check">✅ 核心特性</td><td class="cross">❌ 各自定义</td><td class="partial">⚠️ Proto 定义</td><td class="cross">❌ 各自定义</td><td class="cross">❌ 无标准</td></tr>
+                    <tr><td class="feat-name">零配置发现</td><td class="check">✅ 自动发现</td><td class="cross">❌ 需服务发现</td><td class="cross">❌ 需服务发现</td><td class="partial">⚠️ Broker 依赖</td><td class="cross">❌</td></tr>
+                    <tr><td class="feat-name">双向调用</td><td class="check">✅ 原生双向</td><td class="partial">⚠️ Webhook</td><td class="check">✅ Stream</td><td class="check">✅</td><td class="cross">❌ 单向</td></tr>
+                    <tr><td class="feat-name">无需网络配置</td><td class="check">✅ 本地 IPC</td><td class="cross">❌ 需端口管理</td><td class="cross">❌ 需端口管理</td><td class="cross">❌ 需 Broker</td><td class="check">✅</td></tr>
+                    <tr><td class="feat-name">类型安全</td><td class="check">✅ Schema 校验</td><td class="cross">❌ 无内置</td><td class="check">✅ Proto</td><td class="cross">❌ 无内置</td><td class="cross">❌</td></tr>
+                    <tr><td class="feat-name">流式传输</td><td class="check">✅ 支持</td><td class="partial">⚠️ SSE/WS</td><td class="check">✅ 原生</td><td class="check">✅</td><td class="partial">⚠️</td></tr>
+                    <tr><td class="feat-name">可视化编排</td><td class="check">✅ 配方编辑器</td><td class="cross">❌</td><td class="cross">❌</td><td class="cross">❌</td><td class="cross">❌</td></tr>
+                    <tr><td class="feat-name">安全沙箱</td><td class="check">✅ 内置</td><td class="cross">❌ 自行实现</td><td class="cross">❌ 自行实现</td><td class="cross">❌ 自行实现</td><td class="cross">❌</td></tr>
+                    <tr><td class="feat-name">调用链追踪</td><td class="check">✅ 内置</td><td class="cross">❌ 需额外组件</td><td class="cross">❌ 需额外组件</td><td class="cross">❌ 需额外组件</td><td class="cross">❌</td></tr>
+                    <tr><td class="feat-name">学习曲线</td><td class="check">🟢 低</td><td class="partial">🟡 中</td><td class="partial">🔴 高</td><td class="partial">🟡 中</td><td class="check">🟢 低</td></tr>
+                    <tr><td class="feat-name">社区生态</td><td class="partial">🟡 成长中</td><td class="check">🟢 成熟</td><td class="check">🟢 成熟</td><td class="check">🟢 成熟</td><td class="check">🟢 成熟</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2 class="section-title">为什么选择 KnotLink？</h2>
+        <p class="section-subtitle">三个核心理由</p>
+
+        <div class="insight-grid">
+            <div class="insight-card">
+                <h3>🎯 设计初衷不同</h3>
+                <p>REST/gRPC 为网络服务设计，消息队列为分布式系统设计——KnotLink 专为<strong>本地应用协作</strong>而生，从底层 IPC 到上层编排都为此优化。</p>
+            </div>
+            <div class="insight-card">
+                <h3>🧩 统一即价值</h3>
+                <p>不再需要为每种语言、每个应用单独定义接口格式。KnotLink 提供<strong>统一的调用格式和类型系统</strong>，真正实现"写一次，处处调用"。</p>
+            </div>
+            <div class="insight-card">
+                <h3>🚀 开箱即用</h3>
+                <p>无需配置端口、服务发现、负载均衡。安装 SDK，应用即节点——KnotLink <strong>自动发现</strong>本地可用节点，零配置即可开始调用。</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section cta-section" style="padding-top:0">
+    <div class="container">
+        <div class="cta-box">
+            <h2>准备好体验 KnotLink 了吗？</h2>
+            <p>五分钟接入，感受本地应用协作的全新方式。</p>
+            <div class="cta-actions">
+                <a href="tutorials.html" class="btn btn-primary btn-lg">开始接入</a>
+                <a href="nodes.html" class="btn btn-outline btn-lg">查看支持节点</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container footer-grid">
+        <div class="footer-brand">
+            <img src="logo.png" alt="KnotLink" class="footer-logo">
+            <p>KnotLink — 本地应用协作通信协议</p>
+        </div>
+        <div class="footer-links">
+            <h4>产品</h4>
+            <a href="nodes.html">节点索引</a>
+            <a href="recipes.html">配方中心</a>
+            <a href="scenarios.html">典型场景</a>
+        </div>
+        <div class="footer-links">
+            <h4>开发者</h4>
+            <a href="#">文档</a>
+            <a href="#">SDK</a>
+            <a href="#">API 参考</a>
+        </div>
+        <div class="footer-links">
+            <h4>关于</h4>
+            <a href="compare.html">方案对比</a>
+            <a href="#">GitHub</a>
+            <a href="#">社区</a>
+        </div>
+    </div>
+    <div class="container footer-bottom">
+        <p>&copy; 2025 KnotLink. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>配方中心 — KnotLink</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .page-hero { padding: 120px 0 60px; text-align: center; }
+        .page-hero h1 { font-size: 2.6rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 12px; }
+        .page-hero p { color: var(--color-text-dim); font-size: 1.1rem; max-width: 560px; margin: 0 auto; }
+
+        .recipe-toolbar { display: flex; gap: 14px; margin-bottom: 36px; flex-wrap: wrap; align-items: center; }
+        .recipe-search { flex: 1; min-width: 240px; }
+        .recipe-search input { width: 100%; padding: 12px 18px; border-radius: 99px; border: 1px solid var(--color-border); background: var(--color-bg-card); color: var(--color-text); font-size: 0.94rem; outline: none; transition: border-color .2s; }
+        .recipe-search input:focus { border-color: var(--color-accent); }
+        .recipe-search input::placeholder { color: var(--color-text-muted); }
+        .recipe-tags-filter { display: flex; gap: 8px; flex-wrap: wrap; }
+        .recipe-tags-filter button { padding: 6px 16px; border-radius: 99px; border: 1px solid var(--color-border); background: transparent; color: var(--color-text-dim); cursor: pointer; font-size: 0.82rem; transition: all .2s; }
+        .recipe-tags-filter button.active, .recipe-tags-filter button:hover { background: var(--color-accent); color: #fff; border-color: var(--color-accent); }
+
+        .recipe-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; margin-bottom: 64px; }
+
+        .recipe-card { background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 24px; transition: all .3s; cursor: pointer; }
+        .recipe-card:hover { border-color: rgba(229, 165, 10,.4); background: var(--color-bg-card-hover); transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,.25); }
+        .recipe-card .rc-icon { font-size: 2rem; margin-bottom: 12px; }
+        .recipe-card .rc-name { font-weight: 700; font-size: 1rem; margin-bottom: 6px; }
+        .recipe-card .rc-desc { font-size: 0.82rem; color: var(--color-text-dim); line-height: 1.6; margin-bottom: 12px; }
+        .recipe-card .rc-footer { display: flex; justify-content: space-between; align-items: center; }
+        .recipe-card .rc-tags { display: flex; gap: 5px; flex-wrap: wrap; }
+        .recipe-card .rc-tags span { padding: 2px 8px; border-radius: 99px; font-size: 0.68rem; font-weight: 600; background: rgba(229, 165, 10,.1); color: var(--color-accent); }
+        .recipe-card .rc-uses { font-size: 0.72rem; color: var(--color-text-muted); }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="container nav-inner">
+        <a href="index.html" class="nav-brand">
+            <img src="logo.png" alt="KnotLink" class="nav-logo-small">
+            <span>KnotLink</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="nodes.html">节点</a></li>
+            <li><a href="recipes.html">配方</a></li>
+            <li><a href="scenarios.html">场景</a></li>
+            <li><a href="tutorials.html" class="btn-nav">快速开始</a></li>
+        </ul>
+    </div>
+</nav>
+
+<section class="page-hero">
+    <div class="container">
+        <h1>🧪 配方中心</h1>
+        <p>100+ 开箱即用的应用协作配方，覆盖常见场景，一键配置即可使用。</p>
+    </div>
+</section>
+
+<section class="section" style="padding-top:0">
+    <div class="container">
+
+        <div class="recipe-toolbar">
+            <div class="recipe-search">
+                <input type="text" id="recipeSearch" placeholder="搜索配方（如 AI、Python、数据）...">
+            </div>
+        </div>
+        <div class="recipe-tags-filter" id="tagFilters">
+            <button class="active" data-tag="all">全部</button>
+            <!-- JS 动态生成 -->
+        </div>
+
+        <div class="recipe-grid" id="recipeGrid" style="margin-top:28px">
+            <!-- JS 动态生成 -->
+        </div>
+    </div>
+</section>
+
+<section class="section cta-section" style="padding-top:0">
+    <div class="container">
+        <div class="cta-box">
+            <h2>有好的配方想法？</h2>
+            <p>分享你的配方给社区，让更多人受益于你的协作智慧。</p>
+            <div class="cta-actions">
+                <a href="#" class="btn btn-primary btn-lg">提交配方</a>
+                <a href="tutorials.html" class="btn btn-outline btn-lg">学习创建配方</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container footer-grid">
+        <div class="footer-brand">
+            <img src="logo.png" alt="KnotLink" class="footer-logo">
+            <p>KnotLink — 本地应用协作通信协议</p>
+        </div>
+        <div class="footer-links">
+            <h4>产品</h4>
+            <a href="nodes.html">节点索引</a>
+            <a href="recipes.html">配方中心</a>
+            <a href="scenarios.html">典型场景</a>
+        </div>
+        <div class="footer-links">
+            <h4>开发者</h4>
+            <a href="#">文档</a>
+            <a href="#">SDK</a>
+            <a href="#">API 参考</a>
+        </div>
+        <div class="footer-links">
+            <h4>关于</h4>
+            <a href="compare.html">方案对比</a>
+            <a href="#">GitHub</a>
+            <a href="#">社区</a>
+        </div>
+    </div>
+    <div class="container footer-bottom">
+        <p>&copy; 2025 KnotLink. All rights reserved.</p>
+    </div>
+</footer>
+
+<script>
+const RECIPES_FULL = [
+    { name: 'AI 调用命令行',     desc: 'LLM 应用通过 KnotLink 调用本地终端执行脚本，打通 AI 与本地工具链。',         icon: '🤖', tags: ['AI', 'CLI'],           uses: '2.3k' },
+    { name: 'Excel ↔ Python',  desc: 'Excel 中的数据自动发送给 Python 清洗分析，结果回写表格。',                    icon: '📊', tags: ['数据', '办公'],          uses: '5.1k' },
+    { name: '截图 OCR 翻译',    desc: '截图工具 → OCR 识别 → 翻译引擎 → 结果回填，一气呵成。',                       icon: '📸', tags: ['OCR', '翻译'],           uses: '1.8k' },
+    { name: 'IDE 集成终端',     desc: 'VS Code / JetBrains 与终端深度联动，编辑即执行。',                            icon: '💻', tags: ['IDE', '终端'],           uses: '3.2k' },
+    { name: '文件监控处理',     desc: '文件夹内容变化自动触发多应用处理管道。',                                      icon: '📁', tags: ['文件', '自动化'],        uses: '4.0k' },
+    { name: '消息推送桥接',     desc: 'Slack / 飞书 / 钉钉 等本地客户端消息实时互通。',                              icon: '🔔', tags: ['消息', '实时'],          uses: '2.7k' },
+    { name: '数据可视化管道',   desc: 'Python 分析 → 自动生成 ECharts/D3 可视化 → 浏览器展示。',                   icon: '📈', tags: ['可视化', '数据'],        uses: '3.5k' },
+    { name: '跨语言 RPC 调用',  desc: 'Node.js 直接调用 Rust 函数，零网络开销，本地 IPC 极速通信。',                 icon: '🔗', tags: ['RPC', '多语言'],         uses: '6.8k' },
+    { name: '数据库查询桥接',   desc: '任何本地应用通过统一接口查询 MySQL / PostgreSQL / SQLite。',                  icon: '🗄️', tags: ['数据库', 'SQL'],         uses: '4.5k' },
+    { name: 'WebSocket 中继',   desc: '本地 WebSocket 服务跨应用共享，实时数据同步。',                               icon: '🔌', tags: ['WS', '网络'],            uses: '1.5k' },
+    { name: '定时任务编排',     desc: '多应用定时任务统一调度，支持 Cron 表达式，失败重试。',                        icon: '⏰', tags: ['调度', 'Cron'],          uses: '2.9k' },
+    { name: '日志聚合分析',     desc: '多应用日志统一收集至本地日志中心，支持过滤、搜索与告警。',                    icon: '📋', tags: ['日志', '监控'],          uses: '3.1k' },
+    { name: 'Git 工作流增强',   desc: 'Git 提交自动触发本地 CI 检查、格式化、测试流程。',                           icon: '🔄', tags: ['Git', 'CI'],             uses: '4.8k' },
+    { name: '视频处理流水线',   desc: 'FFmpeg + Python 自动视频转码、剪辑、添加水印。',                              icon: '🎬', tags: ['视频', '多媒体'],        uses: '1.2k' },
+    { name: '本地 API 网关',    desc: '为所有本地应用提供统一的 RESTful API 入口和认证。',                           icon: '🚪', tags: ['网关', 'API'],           uses: '2.0k' },
+    { name: '配置中心同步',     desc: '多应用配置文件自动同步与热更新，无需重启。',                                  icon: '⚙️', tags: ['配置', '同步'],          uses: '1.7k' },
+    { name: '邮件通知集成',     desc: '本地应用事件触发邮件发送，支持 Outlook / Thunderbird。',                      icon: '📧', tags: ['邮件', '通知'],          uses: '2.2k' },
+    { name: 'PDF 生成管道',     desc: 'Markdown / HTML / 数据 → 自动排版 → PDF 输出。',                             icon: '📄', tags: ['PDF', '报告'],           uses: '3.3k' },
+    { name: '消息队列桥接',     desc: '本地 Redis / RabbitMQ 跨应用共享，进程间消息传递。',                          icon: '📨', tags: ['MQ', '队列'],            uses: '1.9k' },
+    { name: '容器生命周期管理', desc: '本地 Docker 容器由应用自动调度：创建、启动、停止、销毁。',                    icon: '🐳', tags: ['Docker', '容器'],        uses: '4.1k' },
+    { name: '语音助手集成',     desc: '本地语音识别 → NLU 处理 → 应用操作，构建个人语音助手。',                     icon: '🎙️', tags: ['语音', 'AI'],            uses: '1.1k' },
+    { name: '剪贴板跨应用共享', desc: '剪贴板内容在多个应用间自动同步与格式转换。',                                  icon: '📋', tags: ['剪贴板', '工具'],        uses: '2.5k' },
+    { name: '屏幕取色器联动',   desc: '屏幕取色 → 调色板应用 → 设计工具，颜色自动流转。',                           icon: '🎨', tags: ['设计', '工具'],          uses: '0.9k' },
+    { name: '股票行情监控',     desc: '本地行情数据 → 分析脚本 → 弹窗告警，实时盯盘。',                             icon: '📈', tags: ['金融', '实时'],          uses: '1.6k' },
+    { name: '批量图片处理',     desc: '图片文件夹 → ImageMagick / Python PIL 批量处理 → 输出。',                     icon: '🖼️', tags: ['图片', '批量'],          uses: '3.0k' },
+    { name: '网络请求代理',     desc: '本地 HTTP 代理 → 请求拦截 → 修改/记录/重放。',                               icon: '🌐', tags: ['网络', '代理'],          uses: '2.4k' },
+    { name: '密钥管理器桥接',   desc: '1Password / Bitwarden 本地客户端 → 应用自动获取密钥。',                      icon: '🔐', tags: ['安全', '密钥'],          uses: '1.3k' },
+    { name: '日历事件联动',     desc: '本地日历应用事件触发自动化任务（到点自动备份、发送日报等）。',                icon: '📅', tags: ['日历', '自动化'],        uses: '2.8k' },
+    { name: '串口设备通信',     desc: '串口设备数据 → 应用解析 → 可视化仪表盘。',                                   icon: '🔌', tags: ['IoT', '硬件'],           uses: '0.9k' },
+    { name: 'Markdown 预览同步',desc: '编辑器 ↔ 预览器实时同步，支持多预览器同时刷新。',                             icon: '📝', tags: ['Markdown', '编辑器'],    uses: '4.3k' },
+];
+
+const ALL_TAGS = [...new Set(RECIPES_FULL.flatMap(r => r.tags))].sort();
+
+function renderTagFilters() {
+    const container = document.getElementById('tagFilters');
+    container.innerHTML = '<button class="active" data-tag="all">全部</button>' +
+        ALL_TAGS.map(t => `<button data-tag="${t}">${t}</button>`).join('');
+
+    container.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('click', () => {
+            container.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            filterRecipes();
+        });
+    });
+}
+
+function filterRecipes() {
+    const search = document.getElementById('recipeSearch').value.toLowerCase();
+    const activeTag = document.querySelector('#tagFilters button.active')?.dataset?.tag || 'all';
+
+    const items = RECIPES_FULL.filter(r => {
+        const matchSearch = !search || r.name.toLowerCase().includes(search) || r.desc.toLowerCase().includes(search) || r.tags.some(t => t.toLowerCase().includes(search));
+        const matchTag = activeTag === 'all' || r.tags.includes(activeTag);
+        return matchSearch && matchTag;
+    });
+
+    document.getElementById('recipeGrid').innerHTML = items.map(r => `
+        <div class="recipe-card">
+            <div class="rc-icon">${r.icon}</div>
+            <div class="rc-name">${r.name}</div>
+            <div class="rc-desc">${r.desc}</div>
+            <div class="rc-footer">
+                <div class="rc-tags">${r.tags.map(t => `<span>${t}</span>`).join('')}</div>
+                <span class="rc-uses">⬇ ${r.uses}</span>
+            </div>
+        </div>
+    `).join('');
+}
+
+document.getElementById('recipeSearch').addEventListener('input', filterRecipes);
+renderTagFilters();
+filterRecipes();
+</script>
+</body>
+</html>

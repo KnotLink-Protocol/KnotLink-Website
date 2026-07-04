@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>节点索引 — KnotLink</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .page-hero { padding: 120px 0 60px; text-align: center; }
+        .page-hero h1 { font-size: 2.6rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 12px; }
+        .page-hero p { color: var(--color-text-dim); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+
+        .node-type-intro { display: flex; gap: 16px; margin-bottom: 40px; justify-content: center; flex-wrap: wrap; }
+        .node-type-card { display: inline-flex; align-items: center; gap: 10px; background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: 99px; padding: 10px 22px; transition: all .3s; }
+        .node-type-card:hover { border-color: rgba(229, 165, 10,.35); }
+        .node-type-card .type-icon { font-size: 1.2rem; }
+        .node-type-card .type-tag { padding: 2px 10px; border-radius: 99px; font-size: 0.7rem; font-weight: 700; }
+        .node-type-card .type-desc { color: var(--color-text-dim); font-size: 0.82rem; }
+        .tag-plugin { background: rgba(229, 165, 10,.15); color: var(--color-accent); }
+        .tag-standalone { background: rgba(52,211,153,.15); color: var(--color-green); }
+
+        .node-stats { display: flex; gap: 24px; justify-content: center; margin-bottom: 36px; flex-wrap: wrap; }
+        .node-stat { background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 20px 32px; text-align: center; min-width: 130px; }
+        .node-stat .stat-num { font-size: 2rem; font-weight: 800; color: var(--color-accent); }
+        .node-stat .stat-label { font-size: 0.82rem; color: var(--color-text-muted); margin-top: 4px; }
+
+        .node-toolbar { display: flex; gap: 12px; margin-bottom: 32px; flex-wrap: wrap; align-items: center; }
+        .node-search { flex: 1; min-width: 220px; }
+        .node-search input { width: 100%; padding: 12px 18px; border-radius: 99px; border: 1px solid var(--color-border); background: var(--color-bg-card); color: var(--color-text); font-size: 0.94rem; outline: none; transition: border-color .2s; }
+        .node-search input:focus { border-color: var(--color-accent); }
+        .node-search input::placeholder { color: var(--color-text-muted); }
+        .node-type-filters { display: flex; gap: 8px; }
+        .node-type-filters button { padding: 7px 18px; border-radius: 99px; border: 1px solid var(--color-border); background: transparent; color: var(--color-text-dim); cursor: pointer; font-size: 0.84rem; transition: all .2s; white-space: nowrap; }
+        .node-type-filters button.active, .node-type-filters button:hover { background: var(--color-accent); color: #fff; border-color: var(--color-accent); }
+
+        .node-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 20px; margin-bottom: 64px; }
+
+        .node-detail-card { background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: 28px 28px 22px; transition: all .25s; display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto auto auto; gap: 0 18px; align-items: start; }
+        .node-detail-card:hover { border-color: rgba(229, 165, 10,.3); background: var(--color-bg-card-hover); transform: translateY(-2px); box-shadow: 0 4px 24px rgba(0,0,0,.2); }
+
+        .node-detail-card .node-logo { width: 56px; height: 56px; grid-row: 1 / 3; border-radius: var(--radius-md); object-fit: contain; background: rgba(255,255,255,.03); }
+        .node-detail-card .node-logo-placeholder { width: 56px; height: 56px; grid-row: 1 / 3; border-radius: var(--radius-md); background: rgba(229, 165, 10,.08); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; }
+
+        .node-detail-card .node-name { font-size: 1.1rem; font-weight: 700; grid-column: 2; }
+        .node-detail-card .node-author { font-size: 0.76rem; color: var(--color-text-muted); grid-column: 2; }
+
+        .node-detail-card .node-desc { font-size: 0.84rem; color: var(--color-text-dim); line-height: 1.65; grid-column: 1 / -1; margin-top: 12px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+        .node-detail-card .node-stats { display: flex; gap: 16px; grid-column: 1 / -1; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--color-border); }
+        .node-detail-card .node-stat-item { font-size: 0.78rem; color: var(--color-text-dim); display: flex; align-items: center; gap: 4px; }
+        .node-detail-card .node-stat-item strong { color: var(--color-accent); }
+        .node-detail-card .node-type-badge { padding: 3px 10px; border-radius: 99px; font-size: 0.7rem; font-weight: 700; margin-left: auto; }
+        .badge-plugin { background: rgba(229, 165, 10,.12); color: var(--color-accent); }
+        .badge-standalone { background: rgba(52,211,153,.12); color: var(--color-green); }
+
+        .empty-state { text-align: center; padding: 60px 20px; color: var(--color-text-muted); }
+        .empty-state .empty-icon { font-size: 3rem; margin-bottom: 12px; }
+        .empty-state p { font-size: 0.95rem; }
+
+        @media (max-width: 768px) {
+            .node-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="container nav-inner">
+        <a href="index.html" class="nav-brand">
+            <img src="logo.png" alt="KnotLink" class="nav-logo-small">
+            <span>KnotLink</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="nodes.html">节点</a></li>
+            <li><a href="recipes.html">配方</a></li>
+            <li><a href="scenarios.html">场景</a></li>
+            <li><a href="tutorials.html" class="btn-nav">快速开始</a></li>
+        </ul>
+    </div>
+</nav>
+
+<section class="page-hero">
+    <div class="container">
+        <h1>🔌 节点索引</h1>
+        <p>节点是 KnotLink 网络中可以被调用的应用。</p>
+    </div>
+</section>
+
+<section class="section" style="padding-top:0">
+    <div class="container">
+
+        <!-- 两种节点类型简介 -->
+        <div class="node-type-intro">
+            <div class="node-type-card">
+                <span class="type-icon">🧩</span>
+                <span class="type-tag tag-plugin">插入式</span>
+                <span class="type-desc">由 KnotHub 启动，管理节点生命周期</span>
+            </div>
+            <div class="node-type-card">
+                <span class="type-icon">🚀</span>
+                <span class="type-tag tag-standalone">独立式</span>
+                <span class="type-desc">独立进程运行，通过协议通信</span>
+            </div>
+        </div>
+
+        <!-- 统计 -->
+        <div class="node-stats">
+            <div class="node-stat"><div class="stat-num" id="nodeCount">1</div><div class="stat-label">节点总数</div></div>
+            <div class="node-stat"><div class="stat-num" id="pluginCount">1</div><div class="stat-label">插入式</div></div>
+            <div class="node-stat"><div class="stat-num" id="standaloneCount">0</div><div class="stat-label">独立式</div></div>
+            <div class="node-stat"><div class="stat-num">1</div><div class="stat-label">贡献者</div></div>
+        </div>
+
+        <!-- 搜索 + 过滤 -->
+        <div class="node-toolbar">
+            <div class="node-search">
+                <input type="text" id="nodeSearch" placeholder="搜索节点...">
+            </div>
+            <div class="node-type-filters" id="typeFilters">
+                <button class="active" data-type="all">全部</button>
+                <button data-type="plugin">🧩 插入式</button>
+                <button data-type="standalone">🚀 独立式</button>
+            </div>
+        </div>
+
+        <!-- 节点列表 -->
+        <div class="node-grid" id="nodeGrid">
+            <!-- JS 动态生成 -->
+        </div>
+    </div>
+</section>
+
+<section class="section cta-section" style="padding-top:0">
+    <div class="container">
+        <div class="cta-box">
+            <h2>贡献你的节点</h2>
+            <p>将你的应用封装为 KnotLink 节点，让其他应用发现并调用。支持插入式和独立式两种方式。</p>
+            <div class="cta-actions">
+                <a href="#" class="btn btn-primary btn-lg">📦 提交节点</a>
+                <a href="tutorials.html" class="btn btn-outline btn-lg">📖 开发指南</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container footer-grid">
+        <div class="footer-brand">
+            <img src="logo.png" alt="KnotLink" class="footer-logo">
+            <p>KnotLink — 本地应用协作通信协议</p>
+        </div>
+        <div class="footer-links">
+            <h4>产品</h4>
+            <a href="nodes.html">节点索引</a>
+            <a href="recipes.html">配方中心</a>
+            <a href="scenarios.html">典型场景</a>
+        </div>
+        <div class="footer-links">
+            <h4>开发者</h4>
+            <a href="#">文档</a>
+            <a href="#">SDK</a>
+            <a href="#">API 参考</a>
+        </div>
+        <div class="footer-links">
+            <h4>关于</h4>
+            <a href="compare.html">方案对比</a>
+            <a href="#">GitHub</a>
+            <a href="#">社区</a>
+        </div>
+    </div>
+    <div class="container footer-bottom">
+        <p>&copy; 2025 KnotLink. All rights reserved.</p>
+    </div>
+</footer>
+
+<script src="nodes-data.js"></script>
+<script>
+// =============================================
+// Dynamic node rendering from nodes-data.js
+// =============================================
+function renderNodes(typeFilter = 'all', searchFilter = '') {
+    const grid = document.getElementById('nodeGrid');
+    const allNodes = window.__KNOTLINK_NODES__ || [];
+    const q = searchFilter.toLowerCase();
+
+    let items = allNodes;
+    if (typeFilter !== 'all') {
+        items = items.filter(n => n.type === typeFilter);
+    }
+    if (q) {
+        items = items.filter(n =>
+            n.name.toLowerCase().includes(q) ||
+            (n.desc || '').toLowerCase().includes(q) ||
+            (n.author || '').toLowerCase().includes(q) ||
+            (n.sockets || []).some(s => s.name.toLowerCase().includes(q) || s.desc.toLowerCase().includes(q)) ||
+            (n.features || []).some(f => f.toLowerCase().includes(q))
+        );
+    }
+
+    document.getElementById('nodeCount').textContent = items.length;
+    document.getElementById('pluginCount').textContent = items.filter(n => n.type === 'plugin').length;
+    document.getElementById('standaloneCount').textContent = items.filter(n => n.type === 'standalone').length;
+
+    if (items.length === 0) {
+        const isStandalone = typeFilter === 'standalone';
+        let emptyMsg = '没有找到匹配的节点。';
+        if (isStandalone) emptyMsg = '独立式节点尚在开发中，欢迎贡献！';
+        else if (typeFilter === 'plugin' && searchFilter) emptyMsg = '没有找到匹配的插入式节点。';
+
+        grid.innerHTML = `<div class="empty-state"><div class="empty-icon">${isStandalone ? '🚀' : '📭'}</div><p>${emptyMsg}</p></div>`;
+        return;
+    }
+
+    grid.innerHTML = items.map(n => {
+        const socketCount = (n.sockets || []).length;
+        const signalCount = (n.signals || []).length;
+        const badgeClass = n.type === 'plugin' ? 'badge-plugin' : 'badge-standalone';
+
+        return `
+        <a href="node-detail.html?id=${n.id}" style="text-decoration:none;color:inherit;display:block">
+        <div class="node-detail-card">
+            ${n.logo
+                ? `<img src="${n.logo}" alt="${n.name}" class="node-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="node-logo-placeholder" style="display:none">${n.typeIcon || '🧩'}</div>`
+                : `<div class="node-logo-placeholder">${n.typeIcon || '🧩'}</div>`
+            }
+            <div class="node-name">${n.name}</div>
+            <div class="node-author">${[n.author, n.version].filter(Boolean).join(' · ')}</div>
+            <div class="node-desc">${n.desc || '暂无描述'}</div>
+            <div class="node-stats">
+                ${socketCount > 0 ? `<span class="node-stat-item">📡 <strong>${socketCount}</strong> 接口</span>` : ''}
+                ${signalCount > 0 ? `<span class="node-stat-item">📶 <strong>${signalCount}</strong> 信号</span>` : ''}
+                <span class="node-type-badge ${badgeClass}">${n.typeIcon || ''} ${n.typeLabel || n.type}</span>
+            </div>
+        </div>
+        </a>`;
+    }).join('');
+}
+
+// =============================================
+// Event bindings
+// =============================================
+let currentType = 'all';
+document.getElementById('nodeSearch').addEventListener('input', (e) => {
+    renderNodes(currentType, e.target.value);
+});
+
+document.querySelectorAll('#typeFilters button').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('#typeFilters button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentType = btn.dataset.type;
+        document.getElementById('nodeSearch').value = '';
+        renderNodes(currentType, '');
+    });
+});
+
+renderNodes();
+</script>
+</body>
+</html>
