@@ -111,26 +111,27 @@
 </footer>
 
 <script>
+const DOCS = 'https://docs.knotlink.cn';
 const TUTORIALS = [
-    { title: '五分钟快速接入 KnotLink', desc: '从下载 SDK 到发出第一个跨应用调用，最快只需五分钟。', level: 'beginner', time: '5 分钟', type: '文字 + 代码' },
-    { title: '配置你的第一个协作配方', desc: '通过配方编辑器，拖拽式配置应用间调用流程，无需写代码。', level: 'beginner', time: '10 分钟', type: '图文教程' },
-    { title: '安装与配置 Node SDK', desc: '为你的 Python / Go / Node.js 应用安装 SDK 并进行基础配置。', level: 'beginner', time: '8 分钟', type: '文字 + 代码' },
-    { title: '理解 KnotLink 协议格式', desc: '深入了解 KnotLink 统一调用格式的结构与设计理念。', level: 'beginner', time: '15 分钟', type: '文档' },
-    { title: '用配方连接两个本地应用', desc: '实战：将 VS Code 与终端通过配方连接，实现代码编辑自动触发命令执行。', level: 'intermediate', time: '20 分钟', type: '视频 + 代码' },
-    { title: '跨语言 RPC 调用实战', desc: 'Python 调用 Rust 函数，Node.js 调用 Go 服务——手把手教学。', level: 'intermediate', time: '25 分钟', type: '视频 + 代码' },
-    { title: '构建数据 ETL 管道', desc: 'Excel → Python 清洗 → R 分析 → 可视化工具，全自动流转。', level: 'intermediate', time: '30 分钟', type: '图文教程' },
-    { title: '自定义节点开发指南', desc: '为不支持的语言或应用开发自定义 KnotLink 节点。', level: 'advanced', time: '40 分钟', type: '文档 + 代码' },
-    { title: 'KnotLink 协议深度解析', desc: '协议设计原理、消息路由机制、安全模型全面剖析。', level: 'advanced', time: '45 分钟', type: '文档' },
-    { title: '性能优化与调优', desc: '高并发场景下的 KnotLink 性能优化策略与最佳实践。', level: 'advanced', time: '35 分钟', type: '文字 + 代码' },
-    { title: '编写复杂配方：条件分支与循环', desc: '在配方中使用条件判断、循环和变量，实现复杂业务逻辑。', level: 'advanced', time: '50 分钟', type: '视频 + 代码' },
-    { title: 'KnotLink 安全最佳实践', desc: '权限控制、传输加密、审计日志——生产环境安全配置指南。', level: 'advanced', time: '30 分钟', type: '文档' },
+    { title: '五分钟快速接入 KnotLink', desc: '从下载 SDK 到发出第一个跨应用调用，最快只需五分钟。', level: 'beginner', time: '5 分钟', type: '文字 + 代码', link: DOCS + '/developer-tutorial/offer-function/getting-started/' },
+    { title: '配置你的第一个协作配方', desc: '通过配方编辑器，拖拽式配置应用间调用流程，无需写代码。', level: 'beginner', time: '10 分钟', type: '图文教程', link: DOCS + '/developer-tutorial/offer-function/getting-started/examlpe-project' },
+    { title: '安装与配置 Node SDK', desc: '为你的 Python / Go / Node.js 应用安装 SDK 并进行基础配置。', level: 'beginner', time: '8 分钟', type: '文字 + 代码', link: DOCS + '/developer-tutorial/offer-function/detailed-tutorial/environment-config' },
+    { title: '理解 KnotLink 协议格式', desc: '深入了解 KnotLink 统一调用格式的结构与设计理念。', level: 'beginner', time: '15 分钟', type: '文档', link: DOCS + '/protocol-standard/payload-spec' },
+    { title: '用配方连接两个本地应用', desc: '实战：将 VS Code 与终端通过配方连接，实现代码编辑自动触发命令执行。', level: 'intermediate', time: '20 分钟', type: '视频 + 代码', link: DOCS + '/developer-tutorial/offer-function/detailed-tutorial/coding' },
+    { title: '跨语言 RPC 调用实战', desc: 'Python 调用 Rust 函数，Node.js 调用 Go 服务——手把手教学。', level: 'intermediate', time: '25 分钟', type: '视频 + 代码', link: DOCS + '/developer-tutorial/offer-function/detailed-tutorial/coding' },
+    { title: '构建数据 ETL 管道', desc: 'Excel → Python 清洗 → R 分析 → 可视化工具，全自动流转。', level: 'intermediate', time: '30 分钟', type: '图文教程', link: DOCS + '/developer-tutorial/offer-function/detailed-tutorial/coding' },
+    { title: '自定义节点开发指南', desc: '为不支持的语言或应用开发自定义 KnotLink 节点。', level: 'advanced', time: '40 分钟', type: '文档 + 代码', link: DOCS + '/developer-tutorial/offer-function/detailed-tutorial/fill-funclist' },
+    { title: 'KnotLink 协议深度解析', desc: '协议设计原理、消息路由机制、安全模型全面剖析。', level: 'advanced', time: '45 分钟', type: '文档', link: DOCS + '/protocol-standard/function-spec' },
+    { title: '性能优化与调优', desc: '高并发场景下的 KnotLink 性能优化策略与最佳实践。', level: 'advanced', time: '35 分钟', type: '文字 + 代码', link: DOCS },
+    { title: '编写复杂配方：条件分支与循环', desc: '在配方中使用条件判断、循环和变量，实现复杂业务逻辑。', level: 'advanced', time: '50 分钟', type: '视频 + 代码', link: DOCS + '/developer-tutorial/offer-function/detailed-tutorial/fill-funclist' },
+    { title: 'KnotLink 安全最佳实践', desc: '权限控制、传输加密、审计日志——生产环境安全配置指南。', level: 'advanced', time: '30 分钟', type: '文档', link: DOCS },
 ];
 
 function renderTutorials(filter = 'all') {
     const grid = document.getElementById('tutorialGrid');
     const items = filter === 'all' ? TUTORIALS : TUTORIALS.filter(t => t.level === filter);
     grid.innerHTML = items.map(t => `
-        <div class="tutorial-card">
+        <a href="${t.link}" target="_blank" class="tutorial-card" style="display:block;text-decoration:none;color:inherit">
             <span class="tut-level ${t.level === 'beginner' ? 'tut-beginner' : t.level === 'intermediate' ? 'tut-intermediate' : 'tut-advanced'}">
                 ${t.level === 'beginner' ? '🟢 入门' : t.level === 'intermediate' ? '🟠 进阶' : '🔴 高级'}
             </span>
@@ -140,7 +141,7 @@ function renderTutorials(filter = 'all') {
                 <span>⏱ ${t.time}</span>
                 <span>📄 ${t.type}</span>
             </div>
-        </div>
+        </a>
     `).join('');
 }
 
