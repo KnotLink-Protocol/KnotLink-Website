@@ -1,17 +1,17 @@
 /**
  * nodes-data.js — 自动生成，请勿手动编辑
  * 由 build-nodes.js 扫描 nodes/ 文件夹生成
- * 生成时间: 2026-07-06T04:23:31.239Z
- * 节点总数: 5 (插入式: 3, 独立式: 2)
+ * 生成时间: 2026-07-06T04:34:41.608Z
+ * 节点总数: 6 (插入式: 4, 独立式: 2)
  */
 window.__KNOTLINK_NODES__ = [
   {
-    "id": "Everything_node",
+    "id": "Everything_node-HXH",
     "type": "plugin",
     "typeLabel": "插入式",
     "typeIcon": "🧩",
-    "dir": "plugin/Everything_node",
-    "name": "Everything_node",
+    "dir": "plugin/Everything_node-HXH",
+    "name": "Everything_node-HXH",
     "appName": "Everything 搜索节点",
     "sockets": [
       {
@@ -111,12 +111,12 @@ window.__KNOTLINK_NODES__ = [
     ]
   },
   {
-    "id": "MultiTTS_Client",
+    "id": "MultiTTS_Client-HXH",
     "type": "plugin",
     "typeLabel": "插入式",
     "typeIcon": "🧩",
-    "dir": "plugin/MultiTTS_Client",
-    "name": "MultiTTS_Client",
+    "dir": "plugin/MultiTTS_Client-HXH",
+    "name": "MultiTTS_Client-HXH",
     "appName": "MultiTTS",
     "sockets": [
       {
@@ -251,6 +251,93 @@ window.__KNOTLINK_NODES__ = [
         ],
         "returns": []
       }
+    ]
+  },
+  {
+    "id": "sysOpTool-HXH",
+    "type": "plugin",
+    "typeLabel": "插入式",
+    "typeIcon": "🧩",
+    "dir": "plugin/sysOpTool-HXH",
+    "name": "系统操作工具",
+    "author": "HXH",
+    "version": "v1.0.0",
+    "desc": "操作系统功能",
+    "appId": "0x00000015",
+    "autoStart": "false",
+    "exePath": "sysOpTool.exe",
+    "appName": "系统操作工具",
+    "sockets": [
+      {
+        "name": "SSS",
+        "id": "0x00000011",
+        "desc": "",
+        "args": [
+          {
+            "name": "cmd",
+            "type": "optional",
+            "desc": "操作",
+            "default": ""
+          }
+        ],
+        "returns": []
+      },
+      {
+        "name": "findWindowByTitle",
+        "id": "0x00000011",
+        "desc": "",
+        "args": [
+          {
+            "name": "cmd",
+            "type": "optional",
+            "desc": "",
+            "default": ""
+          },
+          {
+            "name": "title",
+            "type": "input",
+            "desc": "窗口标题",
+            "default": "t"
+          }
+        ],
+        "returns": [
+          [
+            "句柄",
+            "hwnd"
+          ]
+        ]
+      },
+      {
+        "name": "setWindowState",
+        "id": "0x00000011",
+        "desc": "",
+        "args": [
+          {
+            "name": "cmd",
+            "type": "optional",
+            "desc": "",
+            "default": ""
+          },
+          {
+            "name": "hwnd",
+            "type": "input",
+            "desc": "句柄",
+            "default": "0"
+          },
+          {
+            "name": "state",
+            "type": "optional",
+            "desc": "状态",
+            "default": ""
+          }
+        ],
+        "returns": []
+      }
+    ],
+    "readme": "# 系统操作工具\r\n\r\n操作系统功能\r\n\r\n## 官方网站 / 下载\r\n\r\n暂无\r\n\r\n## 功能特性\r\n\r\n- 暂无\r\n\r\n## 快速开始\r\n\r\n### 环境要求\r\n\r\n- Windows 10+ / macOS 12+\r\n- 其他依赖\r\n\r\n### 安装\r\n\r\n```bash\r\n# 安装步骤\r\n```\r\n\r\n### 使用\r\n\r\n```bash\r\n# 使用示例\r\n```\r\n\r\n## 技术栈\r\n\r\n- **语言** — Cpp\r\n- **框架** — Qt\r\n\r\n## 许可证\r\n\r\nCopyright © 2026 HXH. All rights reserved.\r\n",
+    "techs": [
+      "语言",
+      "框架"
     ]
   },
   {
