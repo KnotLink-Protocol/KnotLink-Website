@@ -18,7 +18,7 @@ assignees: ''
 - [ ] `plugin_manifest.json` / `standalone_manifest.json`
 - [ ] `FuncList.json`
 - [ ] `logo.png`
-- [ ] `README.md`
+- [ ] `README.md`（须包含官方网站/下载链接）
 
 ## AppID 分配
 

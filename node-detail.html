@@ -209,6 +209,7 @@ if (!node) {
                         ${node.author ? `<span>👤 ${node.author}</span>` : ''}
                         ${node.version ? `<span>📦 ${node.version}</span>` : ''}
                         ${node.appId ? `<span style="font-family:var(--font-mono)">🆔 ${node.appId}</span>` : ''}
+                        <a href="nodes/${node.dir}/FuncList.json" download class="btn btn-outline" style="padding:4px 14px;font-size:0.78rem;margin-left:8px">⬇ 下载 FuncList.json</a>
                     </div>
                     <p class="node-hero-desc">${node.desc || '暂无描述'}</p>
                 </div>
@@ -334,6 +335,7 @@ if (!node) {
                 ${node.exePath ? `<tr><td>可执行文件</td><td>${node.exePath}</td></tr>` : ''}
                 ${node.autoStart !== undefined ? `<tr><td>开机自启</td><td>${node.autoStart === 'true' ? '✅ 是' : '❌ 否'}</td></tr>` : ''}
                 ${node.dir ? `<tr><td>目录</td><td>nodes/${node.dir}</td></tr>` : ''}
+                <tr><td>FuncList</td><td><a href="nodes/${node.dir}/FuncList.json" download style="color:var(--color-accent)">⬇ 下载 FuncList.json</a></td></tr>
             </table>
         </div>
     </div>`;
