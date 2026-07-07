@@ -104,6 +104,8 @@ function scanNodes() {
                 try {
                     const funcList = JSON.parse(fs.readFileSync(funcListPath, 'utf-8'));
                     nodeData.appName = funcList.appName || nodeData.name;
+                    nodeData.specVersion = funcList.specVersion || '';
+                    nodeData.manifestVersion = funcList.manifestVersion || '';
 
                     // 解析 openSocket
                     if (funcList.openSocket) {

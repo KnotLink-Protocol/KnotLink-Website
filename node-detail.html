@@ -330,6 +330,8 @@ if (!node) {
                 <tr><td>类型</td><td>${node.typeLabel || node.type} (${node.type})</td></tr>
                 ${node.appId ? `<tr><td>App ID</td><td>${node.appId}</td></tr>` : ''}
                 ${node.appName ? `<tr><td>应用名</td><td>${node.appName}</td></tr>` : ''}
+                ${node.specVersion ? `<tr><td>规范版本</td><td>spec ${node.specVersion}</td></tr>` : ''}
+                ${node.manifestVersion ? `<tr><td>清单版本</td><td>${node.manifestVersion}</td></tr>` : ''}
                 ${node.author ? `<tr><td>作者</td><td>${node.author}</td></tr>` : ''}
                 ${node.version ? `<tr><td>版本</td><td>${node.version}</td></tr>` : ''}
                 ${node.exePath ? `<tr><td>可执行文件</td><td>${node.exePath}</td></tr>` : ''}

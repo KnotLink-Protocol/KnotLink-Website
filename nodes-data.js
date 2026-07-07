@@ -1,7 +1,7 @@
 /**
  * nodes-data.js — 自动生成，请勿手动编辑
  * 由 build-nodes.js 扫描 nodes/ 文件夹生成
- * 生成时间: 2026-07-06T04:40:01.614Z
+ * 生成时间: 2026-07-07T03:40:09.065Z
  * 节点总数: 6 (插入式: 4, 独立式: 2)
  */
 window.__KNOTLINK_NODES__ = [
@@ -13,6 +13,8 @@ window.__KNOTLINK_NODES__ = [
     "dir": "plugin/Everything_node-HXH",
     "name": "Everything_node-HXH",
     "appName": "Everything 搜索节点",
+    "specVersion": "",
+    "manifestVersion": "",
     "sockets": [
       {
         "name": "search",
@@ -77,6 +79,8 @@ window.__KNOTLINK_NODES__ = [
     "autoStart": "true",
     "exePath": "MsgNotification.exe",
     "appName": "消息提醒",
+    "specVersion": "",
+    "manifestVersion": "",
     "sockets": [
       {
         "name": "ShowMsg",
@@ -119,6 +123,8 @@ window.__KNOTLINK_NODES__ = [
     "dir": "plugin/MultiTTS_Client-HXH",
     "name": "MultiTTS_Client-HXH",
     "appName": "MultiTTS",
+    "specVersion": "",
+    "manifestVersion": "",
     "sockets": [
       {
         "name": "SysTTS",
@@ -268,6 +274,8 @@ window.__KNOTLINK_NODES__ = [
     "autoStart": "false",
     "exePath": "sysOpTool.exe",
     "appName": "系统操作工具",
+    "specVersion": "",
+    "manifestVersion": "",
     "sockets": [
       {
         "name": "SSS",
@@ -349,6 +357,8 @@ window.__KNOTLINK_NODES__ = [
     "dir": "standalone/ClassIsland-信",
     "name": "ClassIsland-信",
     "appName": "ClassIsland",
+    "specVersion": "",
+    "manifestVersion": "",
     "sockets": [
       {
         "name": "ClassService",
@@ -495,6 +505,8 @@ window.__KNOTLINK_NODES__ = [
     "dir": "standalone/NamePicker",
     "name": "NamePicker",
     "appName": "RandomPicker",
+    "specVersion": "",
+    "manifestVersion": "",
     "sockets": [
       {
         "name": "pick",
