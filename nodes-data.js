@@ -1,8 +1,8 @@
 /**
  * nodes-data.js — 自动生成，请勿手动编辑
  * 由 build-nodes.js 扫描 nodes/ 文件夹生成
- * 生成时间: 2026-07-07T03:40:09.065Z
- * 节点总数: 6 (插入式: 4, 独立式: 2)
+ * 生成时间: 2026-07-08T10:15:49.043Z
+ * 节点总数: 7 (插入式: 4, 独立式: 3)
  */
 window.__KNOTLINK_NODES__ = [
   {
@@ -496,6 +496,477 @@ window.__KNOTLINK_NODES__ = [
         ]
       }
     ]
+  },
+  {
+    "id": "ICK",
+    "type": "standalone",
+    "typeLabel": "独立式",
+    "typeIcon": "🚀",
+    "dir": "standalone/ICK",
+    "name": "ICK",
+    "author": "XY Wang & HXH",
+    "version": "v1.0.0",
+    "desc": "提供屏幕批注相关功能",
+    "appId": "0x00000031",
+    "appName": "Ink Canvas",
+    "specVersion": "",
+    "manifestVersion": "",
+    "sockets": [
+      {
+        "name": "GetStatus",
+        "id": "0x00000021",
+        "desc": "获取 Ink Canvas 当前状态",
+        "args": [
+          {
+            "name": "action",
+            "type": "static",
+            "desc": "操作指令",
+            "default": ""
+          }
+        ],
+        "returns": [
+          [
+            "status",
+            "状态（Successful/Error）"
+          ],
+          [
+            "visible",
+            "墨迹画布可见状态（true/false）"
+          ],
+          [
+            "isPenMode",
+            "是否为笔模式（true/false）"
+          ],
+          [
+            "isEraserMode",
+            "是否为橡皮擦模式（true/false）"
+          ]
+        ]
+      },
+      {
+        "name": "GetVersion",
+        "id": "0x00000021",
+        "desc": "获取 Ink Canvas 版本信息",
+        "args": [
+          {
+            "name": "action",
+            "type": "static",
+            "desc": "操作指令",
+            "default": ""
+          }
+        ],
+        "returns": [
+          [
+            "status",
+            "状态（Successful/Error）"
+          ],
+          [
+            "version",
+            "版本号"
+          ]
+        ]
+      },
+      {
+        "name": "SwitchToPen",
+        "id": "0x00000021",
+        "desc": "切换到笔模式",
+        "args": [
+          {
+            "name": "action",
+            "type": "static",
+            "desc": "操作指令",
+            "default": ""
+          }
+        ],
+        "returns": [
+          [
+            "status",
+            "状态（Successful/Error）"
+          ]
+        ]
+      },
+      {
+        "name": "SwitchToEraser",
+        "id": "0x00000021",
+        "desc": "切换到橡皮擦模式",
+        "args": [
+          {
+            "name": "action",
+            "type": "static",
+            "desc": "操作指令",
+            "default": ""
+          }
+        ],
+        "returns": [
+          [
+            "status",
+            "状态（Successful/Error）"
+          ]
+        ]
+      },
+      {
+        "name": "SwitchToCursor",
+        "id": "0x00000021",
+        "desc": "切换到光标/选择模式（隐藏墨迹画布）",
+        "args": [
+          {
+            "name": "action",
+            "type": "static",
+            "desc": "操作指令",
+            "default": ""
+          }
+        ],
+        "returns": [
+          [
+            "status",
+            "状态（Successful/Error）"
+          ]
+        ]
+      },
+      {
+        "name": "Show",
+        "id": "0x00000021",
+        "desc": "显示墨迹画布",
+        "args": [
+          {
+            "name": "action",
+            "type": "static",
+            "desc": "操作指令",
+            "default": ""
+          }
+        ],
+        "returns": [
+          [
+            "status",
+            "状态（Successful/Error）"
+          ]
+        ]
+      },
+      {
+        "name": "Hide",
+        "id": "0x00000021",
+        "desc": "隐藏墨迹画布",
+        "args": [
+          {
+            "name": "action",
+            "type": "static",
+            "desc": "操作指令",
+            "default": ""
+          }
+        ],
+        "returns": [
+          [
+            "status",
+            "状态（Successful/Error）"
+          ]
+        ]
+      },
+      {
+        "name": "ToggleDrawpad",
+        "id": "0x00000021",
+        "desc": "切换墨迹画布可见性",
+        "args": [
+          {
+            "name": "action",
+            "type": "static",
+            "desc": "操作指令",
+            "default": ""
+          }
+        ],
+        "returns": [
+          [
+            "status",
+            "状态（Successful/Error）"
+          ]
+        ]
+      },
+      {
+        "name": "Clear",
+        "id": "0x00000021",
+        "desc": "清空画布",
+        "args": [
+          {
+            "name": "action",
+            "type": "static",
+            "desc": "操作指令",
+            "default": ""
+          }
+        ],
+        "returns": [
+          [
+            "status",
+            "状态（Successful/Error）"
+          ]
+        ]
+      },
+      {
+        "name": "Undo",
+        "id": "0x00000021",
+        "desc": "撤销上一步操作",
+        "args": [
+          {
+            "name": "action",
+            "type": "static",
+            "desc": "操作指令",
+            "default": ""
+          }
+        ],
+        "returns": [
+          [
+            "status",
+            "状态（Successful/Error）"
+          ]
+        ]
+      },
+      {
+        "name": "Redo",
+        "id": "0x00000021",
+        "desc": "重做上一步撤销的操作",
+        "args": [
+          {
+            "name": "action",
+            "type": "static",
+            "desc": "操作指令",
+            "default": ""
+          }
+        ],
+        "returns": [
+          [
+            "status",
+            "状态（Successful/Error）"
+          ]
+        ]
+      },
+      {
+        "name": "ScreenMode",
+        "id": "0x00000021",
+        "desc": "切换到屏幕模式（透明背景，可看到桌面）",
+        "args": [
+          {
+            "name": "action",
+            "type": "static",
+            "desc": "操作指令",
+            "default": ""
+          }
+        ],
+        "returns": [
+          [
+            "status",
+            "状态（Successful/Error）"
+          ]
+        ]
+      },
+      {
+        "name": "BoardMode",
+        "id": "0x00000021",
+        "desc": "切换到白板/黑板模式（颜色跟随用户主题设置）",
+        "args": [
+          {
+            "name": "action",
+            "type": "static",
+            "desc": "操作指令",
+            "default": ""
+          }
+        ],
+        "returns": [
+          [
+            "status",
+            "状态（Successful/Error）"
+          ]
+        ]
+      },
+      {
+        "name": "MoveToCenter",
+        "id": "0x00000021",
+        "desc": "移动悬浮工具栏到屏幕中央",
+        "args": [
+          {
+            "name": "action",
+            "type": "static",
+            "desc": "操作指令",
+            "default": ""
+          }
+        ],
+        "returns": [
+          [
+            "status",
+            "状态（Successful/Error）"
+          ]
+        ]
+      },
+      {
+        "name": "MoveToLeft",
+        "id": "0x00000021",
+        "desc": "移动悬浮工具栏到屏幕左侧",
+        "args": [
+          {
+            "name": "action",
+            "type": "static",
+            "desc": "操作指令",
+            "default": ""
+          }
+        ],
+        "returns": [
+          [
+            "status",
+            "状态（Successful/Error）"
+          ]
+        ]
+      },
+      {
+        "name": "MoveToRight",
+        "id": "0x00000021",
+        "desc": "移动悬浮工具栏到屏幕右侧",
+        "args": [
+          {
+            "name": "action",
+            "type": "static",
+            "desc": "操作指令",
+            "default": ""
+          }
+        ],
+        "returns": [
+          [
+            "status",
+            "状态（Successful/Error）"
+          ]
+        ]
+      },
+      {
+        "name": "MoveToTop",
+        "id": "0x00000021",
+        "desc": "移动悬浮工具栏到屏幕顶部",
+        "args": [
+          {
+            "name": "action",
+            "type": "static",
+            "desc": "操作指令",
+            "default": ""
+          }
+        ],
+        "returns": [
+          [
+            "status",
+            "状态（Successful/Error）"
+          ]
+        ]
+      },
+      {
+        "name": "MoveToBottom",
+        "id": "0x00000021",
+        "desc": "移动悬浮工具栏到屏幕底部",
+        "args": [
+          {
+            "name": "action",
+            "type": "static",
+            "desc": "操作指令",
+            "default": ""
+          }
+        ],
+        "returns": [
+          [
+            "status",
+            "状态（Successful/Error）"
+          ]
+        ]
+      },
+      {
+        "name": "Collapse",
+        "id": "0x00000021",
+        "desc": "收起悬浮工具栏（折叠为 emoji 图标）",
+        "args": [
+          {
+            "name": "action",
+            "type": "static",
+            "desc": "操作指令",
+            "default": ""
+          }
+        ],
+        "returns": [
+          [
+            "status",
+            "状态（Successful/Error）"
+          ]
+        ]
+      },
+      {
+        "name": "Expand",
+        "id": "0x00000021",
+        "desc": "展开悬浮工具栏（显示全部控件）",
+        "args": [
+          {
+            "name": "action",
+            "type": "static",
+            "desc": "操作指令",
+            "default": ""
+          }
+        ],
+        "returns": [
+          [
+            "status",
+            "状态（Successful/Error）"
+          ]
+        ]
+      },
+      {
+        "name": "DrawFunction",
+        "id": "0x00000021",
+        "desc": "绘制函数图像 (y=f(x))",
+        "args": [
+          {
+            "name": "action",
+            "type": "static",
+            "desc": "操作指令",
+            "default": ""
+          },
+          {
+            "name": "expression",
+            "type": "input",
+            "desc": "数学表达式，支持 LaTeX",
+            "default": "sin(x)"
+          },
+          {
+            "name": "xMin",
+            "type": "input",
+            "desc": "x 最小值",
+            "default": "-6.28"
+          },
+          {
+            "name": "xMax",
+            "type": "input",
+            "desc": "x 最大值",
+            "default": "6.28"
+          },
+          {
+            "name": "step",
+            "type": "input",
+            "desc": "采样步长 (越小越平滑)",
+            "default": "0.05"
+          },
+          {
+            "name": "offsetX",
+            "type": "input",
+            "desc": "原点 X 像素偏移 (相对画布中心)",
+            "default": "0"
+          },
+          {
+            "name": "offsetY",
+            "type": "input",
+            "desc": "原点 Y 像素偏移 (相对画布中心, 正=上)",
+            "default": "0"
+          }
+        ],
+        "returns": [
+          [
+            "status",
+            "状态（Successful/Error）"
+          ]
+        ]
+      }
+    ],
+    "logo": "nodes/standalone/ICK/logo.png",
+    "readme": "# ICK\r\n\r\n提供屏幕批注相关功能。\r\n\r\n## 官方网站 / 下载\r\n\r\n\r\n\r\n## 功能特性\r\n\r\n\r\n\r\n## 快速开始\r\n\r\n### 环境要求\r\n\r\n- Windows 10+ / macOS 12+\r\n- 其他依赖\r\n\r\n### 安装\r\n\r\n```bash\r\n# 安装步骤\r\n```\r\n\r\n### 使用\r\n\r\n```bash\r\n\r\n```\r\n\r\n## 技术栈\r\n\r\n\r\n\r\n## 许可证\r\n\r\nCopyright © 2026 XY Wang & HXH. All rights reserved.\r\n",
+    "techs": []
   },
   {
     "id": "NamePicker",
