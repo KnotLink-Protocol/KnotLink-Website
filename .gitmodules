@@ -1,6 +1,6 @@
 [submodule "nodes"]
 	path = nodes
-	url = git@github.com:KnotLink-Protocol/KNodeIndex.git
+	url = https://github.com/KnotLink-Protocol/KNodeIndex.git
 [submodule "recipes-market"]
 	path = recipes-market
-	url = git@github.com:KnotLink-Protocol/KRecipeMarket.git
+	url = https://github.com/KnotLink-Protocol/KRecipeMarket.git
