@@ -18,6 +18,9 @@
         .recipe-tags-filter { display: flex; gap: 8px; flex-wrap: wrap; }
         .recipe-tags-filter button { padding: 6px 16px; border-radius: 99px; border: 1px solid var(--color-border); background: transparent; color: var(--color-text-dim); cursor: pointer; font-size: 0.82rem; transition: all .2s; }
         .recipe-tags-filter button.active, .recipe-tags-filter button:hover { background: var(--color-accent); color: #fff; border-color: var(--color-accent); }
+        .recipe-app-filter select { padding: 12px 18px; border-radius: 99px; border: 1px solid var(--color-border); background: var(--color-bg-card); color: var(--color-text); font-size: 0.88rem; outline: none; cursor: pointer; transition: border-color .2s; min-width: 180px; }
+        .recipe-app-filter select:focus { border-color: var(--color-accent); }
+        .recipe-app-filter select option { background: var(--color-bg-card); color: var(--color-text); }
 
         .recipe-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; margin-bottom: 64px; }
 
@@ -53,7 +56,7 @@
 <section class="page-hero">
     <div class="container">
         <h1>🧪 配方中心</h1>
-        <p>100+ 开箱即用的应用协作配方，覆盖常见场景，一键配置即可使用。</p>
+        <p>开箱即用的应用协作配方，覆盖常见场景，一键配置即可使用。</p>
     </div>
 </section>
 
@@ -63,6 +66,12 @@
         <div class="recipe-toolbar">
             <div class="recipe-search">
                 <input type="text" id="recipeSearch" placeholder="搜索配方（如 AI、Python、数据）...">
+            </div>
+            <div class="recipe-app-filter">
+                <select id="appFilter">
+                    <option value="all">📱 全部应用</option>
+                    <!-- JS 动态生成 -->
+                </select>
             </div>
         </div>
         <div class="recipe-tags-filter" id="tagFilters">
@@ -119,81 +128,128 @@
     </div>
 </footer>
 
+<script src="recipes-data.js"></script>
 <script>
-const RECIPES_FULL = [
-    { name: 'AI 调用命令行',     desc: 'LLM 应用通过 KnotLink 调用本地终端执行脚本，打通 AI 与本地工具链。',         icon: '🤖', tags: ['AI', 'CLI'],           uses: '2.3k' },
-    { name: 'Excel ↔ Python',  desc: 'Excel 中的数据自动发送给 Python 清洗分析，结果回写表格。',                    icon: '📊', tags: ['数据', '办公'],          uses: '5.1k' },
-    { name: '截图 OCR 翻译',    desc: '截图工具 → OCR 识别 → 翻译引擎 → 结果回填，一气呵成。',                       icon: '📸', tags: ['OCR', '翻译'],           uses: '1.8k' },
-    { name: 'IDE 集成终端',     desc: 'VS Code / JetBrains 与终端深度联动，编辑即执行。',                            icon: '💻', tags: ['IDE', '终端'],           uses: '3.2k' },
-    { name: '文件监控处理',     desc: '文件夹内容变化自动触发多应用处理管道。',                                      icon: '📁', tags: ['文件', '自动化'],        uses: '4.0k' },
-    { name: '消息推送桥接',     desc: 'Slack / 飞书 / 钉钉 等本地客户端消息实时互通。',                              icon: '🔔', tags: ['消息', '实时'],          uses: '2.7k' },
-    { name: '数据可视化管道',   desc: 'Python 分析 → 自动生成 ECharts/D3 可视化 → 浏览器展示。',                   icon: '📈', tags: ['可视化', '数据'],        uses: '3.5k' },
-    { name: '跨语言 RPC 调用',  desc: 'Node.js 直接调用 Rust 函数，零网络开销，本地 IPC 极速通信。',                 icon: '🔗', tags: ['RPC', '多语言'],         uses: '6.8k' },
-    { name: '数据库查询桥接',   desc: '任何本地应用通过统一接口查询 MySQL / PostgreSQL / SQLite。',                  icon: '🗄️', tags: ['数据库', 'SQL'],         uses: '4.5k' },
-    { name: 'WebSocket 中继',   desc: '本地 WebSocket 服务跨应用共享，实时数据同步。',                               icon: '🔌', tags: ['WS', '网络'],            uses: '1.5k' },
-    { name: '定时任务编排',     desc: '多应用定时任务统一调度，支持 Cron 表达式，失败重试。',                        icon: '⏰', tags: ['调度', 'Cron'],          uses: '2.9k' },
-    { name: '日志聚合分析',     desc: '多应用日志统一收集至本地日志中心，支持过滤、搜索与告警。',                    icon: '📋', tags: ['日志', '监控'],          uses: '3.1k' },
-    { name: 'Git 工作流增强',   desc: 'Git 提交自动触发本地 CI 检查、格式化、测试流程。',                           icon: '🔄', tags: ['Git', 'CI'],             uses: '4.8k' },
-    { name: '视频处理流水线',   desc: 'FFmpeg + Python 自动视频转码、剪辑、添加水印。',                              icon: '🎬', tags: ['视频', '多媒体'],        uses: '1.2k' },
-    { name: '本地 API 网关',    desc: '为所有本地应用提供统一的 RESTful API 入口和认证。',                           icon: '🚪', tags: ['网关', 'API'],           uses: '2.0k' },
-    { name: '配置中心同步',     desc: '多应用配置文件自动同步与热更新，无需重启。',                                  icon: '⚙️', tags: ['配置', '同步'],          uses: '1.7k' },
-    { name: '邮件通知集成',     desc: '本地应用事件触发邮件发送，支持 Outlook / Thunderbird。',                      icon: '📧', tags: ['邮件', '通知'],          uses: '2.2k' },
-    { name: 'PDF 生成管道',     desc: 'Markdown / HTML / 数据 → 自动排版 → PDF 输出。',                             icon: '📄', tags: ['PDF', '报告'],           uses: '3.3k' },
-    { name: '消息队列桥接',     desc: '本地 Redis / RabbitMQ 跨应用共享，进程间消息传递。',                          icon: '📨', tags: ['MQ', '队列'],            uses: '1.9k' },
-    { name: '容器生命周期管理', desc: '本地 Docker 容器由应用自动调度：创建、启动、停止、销毁。',                    icon: '🐳', tags: ['Docker', '容器'],        uses: '4.1k' },
-    { name: '语音助手集成',     desc: '本地语音识别 → NLU 处理 → 应用操作，构建个人语音助手。',                     icon: '🎙️', tags: ['语音', 'AI'],            uses: '1.1k' },
-    { name: '剪贴板跨应用共享', desc: '剪贴板内容在多个应用间自动同步与格式转换。',                                  icon: '📋', tags: ['剪贴板', '工具'],        uses: '2.5k' },
-    { name: '屏幕取色器联动',   desc: '屏幕取色 → 调色板应用 → 设计工具，颜色自动流转。',                           icon: '🎨', tags: ['设计', '工具'],          uses: '0.9k' },
-    { name: '股票行情监控',     desc: '本地行情数据 → 分析脚本 → 弹窗告警，实时盯盘。',                             icon: '📈', tags: ['金融', '实时'],          uses: '1.6k' },
-    { name: '批量图片处理',     desc: '图片文件夹 → ImageMagick / Python PIL 批量处理 → 输出。',                     icon: '🖼️', tags: ['图片', '批量'],          uses: '3.0k' },
-    { name: '网络请求代理',     desc: '本地 HTTP 代理 → 请求拦截 → 修改/记录/重放。',                               icon: '🌐', tags: ['网络', '代理'],          uses: '2.4k' },
-    { name: '密钥管理器桥接',   desc: '1Password / Bitwarden 本地客户端 → 应用自动获取密钥。',                      icon: '🔐', tags: ['安全', '密钥'],          uses: '1.3k' },
-    { name: '日历事件联动',     desc: '本地日历应用事件触发自动化任务（到点自动备份、发送日报等）。',                icon: '📅', tags: ['日历', '自动化'],        uses: '2.8k' },
-    { name: '串口设备通信',     desc: '串口设备数据 → 应用解析 → 可视化仪表盘。',                                   icon: '🔌', tags: ['IoT', '硬件'],           uses: '0.9k' },
-    { name: 'Markdown 预览同步',desc: '编辑器 ↔ 预览器实时同步，支持多预览器同时刷新。',                             icon: '📝', tags: ['Markdown', '编辑器'],    uses: '4.3k' },
-];
+// =============================================
+// Recipe data — from recipes-data.js
+// =============================================
+function getRecipes() {
+    return window.__KNOTLINK_RECIPES__ || [];
+}
+function getTags() {
+    return window.__KNOTLINK_RECIPE_TAGS__ || [];
+}
+function getApps() {
+    return window.__KNOTLINK_RECIPE_APPS__ || [];
+}
 
-const ALL_TAGS = [...new Set(RECIPES_FULL.flatMap(r => r.tags))].sort();
+let activeTag = 'all';
+let activeApp = 'all';
 
+// =============================================
+// Render tag filter buttons
+// =============================================
 function renderTagFilters() {
     const container = document.getElementById('tagFilters');
+    const allTags = getTags();
+
     container.innerHTML = '<button class="active" data-tag="all">全部</button>' +
-        ALL_TAGS.map(t => `<button data-tag="${t}">${t}</button>`).join('');
+        allTags.map(t => `<button data-tag="${t}">${t}</button>`).join('');
 
     container.querySelectorAll('button').forEach(btn => {
         btn.addEventListener('click', () => {
             container.querySelectorAll('button').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
+            activeTag = btn.dataset.tag;
             filterRecipes();
         });
     });
 }
 
+// =============================================
+// Render app filter dropdown
+// =============================================
+function renderAppFilter() {
+    const select = document.getElementById('appFilter');
+    const allApps = getApps();
+
+    // Build a unique app_id → app_name map from recipe links
+    const appMap = {};
+    const recipes = getRecipes();
+    for (const r of recipes) {
+        for (const link of r.links) {
+            if (!appMap[link.app_id]) {
+                appMap[link.app_id] = link.app_name || link.app_id;
+            }
+        }
+    }
+
+    for (const [appId, appName] of Object.entries(appMap).sort((a, b) => a[1].localeCompare(b[1]))) {
+        const option = document.createElement('option');
+        option.value = appId;
+        option.textContent = `${appName}`;
+        select.appendChild(option);
+    }
+
+    select.addEventListener('change', () => {
+        activeApp = select.value;
+        filterRecipes();
+    });
+}
+
+// =============================================
+// Filter and render recipe grid
+// =============================================
 function filterRecipes() {
     const search = document.getElementById('recipeSearch').value.toLowerCase();
-    const activeTag = document.querySelector('#tagFilters button.active')?.dataset?.tag || 'all';
+    const recipes = getRecipes();
 
-    const items = RECIPES_FULL.filter(r => {
-        const matchSearch = !search || r.name.toLowerCase().includes(search) || r.desc.toLowerCase().includes(search) || r.tags.some(t => t.toLowerCase().includes(search));
+    const filtered = recipes.filter(r => {
+        // Search filter
+        const matchSearch = !search
+            || r.name.toLowerCase().includes(search)
+            || r.description.toLowerCase().includes(search)
+            || r.tags.some(t => t.toLowerCase().includes(search));
+
+        // Tag filter
         const matchTag = activeTag === 'all' || r.tags.includes(activeTag);
-        return matchSearch && matchTag;
+
+        // App filter
+        const matchApp = activeApp === 'all' || r.links.some(l => l.app_id === activeApp);
+
+        return matchSearch && matchTag && matchApp;
     });
 
-    document.getElementById('recipeGrid').innerHTML = items.map(r => `
-        <div class="recipe-card">
+    const grid = document.getElementById('recipeGrid');
+
+    if (filtered.length === 0) {
+        grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--color-text-muted)">
+            <div style="font-size:3rem;margin-bottom:12px">📭</div>
+            <p>没有匹配的配方</p>
+            <p style="font-size:0.85rem;margin-top:6px">试试更换筛选条件，或<a href="https://github.com/KnotLink-Protocol/KNodeIndex" style="color:var(--color-accent)">提交新配方</a></p>
+        </div>`;
+        return;
+    }
+
+    grid.innerHTML = filtered.map(r => `
+        <a href="recipe-detail.html?id=${encodeURIComponent(r.id)}" class="recipe-card" style="display:block">
             <div class="rc-icon">${r.icon}</div>
             <div class="rc-name">${r.name}</div>
-            <div class="rc-desc">${r.desc}</div>
+            <div class="rc-desc">${r.description}</div>
             <div class="rc-footer">
                 <div class="rc-tags">${r.tags.map(t => `<span>${t}</span>`).join('')}</div>
-                <span class="rc-uses">⬇ ${r.uses}</span>
+                <span class="rc-uses" style="font-size:0.72rem;color:var(--color-text-muted)">v${r.version}</span>
             </div>
-        </div>
+        </a>
     `).join('');
 }
 
+// =============================================
+// Init
+// =============================================
 document.getElementById('recipeSearch').addEventListener('input', filterRecipes);
 renderTagFilters();
+renderAppFilter();
 filterRecipes();
 </script>
 </body>
