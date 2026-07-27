@@ -1,7 +1,7 @@
 /**
  * nodes-data.js — 自动生成，请勿手动编辑
  * 由 build-nodes.js 扫描 nodes/ 文件夹生成
- * 生成时间: 2026-07-27T12:38:51.515Z
+ * 生成时间: 2026-07-27T14:44:51.512Z
  * 节点总数: 7 (插入式: 4, 独立式: 3)
  */
 window.__KNOTLINK_NODES__ = [
@@ -298,99 +298,263 @@ window.__KNOTLINK_NODES__ = [
     ]
   },
   {
-    "id": "sysOpTool-HXH",
+    "id": "系统操作工具-hxh230802",
     "type": "plugin",
     "typeLabel": "插入式",
     "typeIcon": "🧩",
-    "dir": "plugin/sysOpTool-HXH",
+    "dir": "plugin/系统操作工具-hxh230802",
     "name": "系统操作工具",
-    "author": "HXH",
+    "author": "hxh230802",
     "version": "v1.0.0",
-    "desc": "操作系统功能",
-    "appId": "0x00000015",
+    "desc": "系统操作工具，支持关机、睡眠、锁屏、音量控制、窗口管理",
+    "appId": "com.github.hxh230802.sysoperatetool",
     "autoStart": "false",
-    "downloadUrl": "https://github.com/hxh230802/sysOpTool/releases/latest",
-    "exePath": "sysOpTool.exe",
+    "downloadUrl": "https://github.com/KnotLink-Nodes/sysOperateTool/releases/latest",
+    "exePath": "sysOperatTool.exe",
     "appName": "系统操作工具",
     "specVersion": "1.0",
     "manifestVersion": "1.0.0",
     "sockets": [
       {
-        "name": "SSS",
-        "id": "0x00000011",
-        "desc": "系统电源操作：关机、睡眠、锁屏",
+        "name": "shutdown",
+        "id": "system",
+        "desc": "定时关机，支持倒计时和静默执行",
         "args": [
           {
-            "name": "cmd",
+            "name": "action",
+            "type": "static",
+            "desc": "命令类型（固定为 shutdown）",
+            "default": ""
+          },
+          {
+            "name": "delay",
+            "type": "input",
+            "desc": "倒计时秒数，0 为立即执行",
+            "default": "10"
+          },
+          {
+            "name": "silence",
             "type": "optional",
-            "desc": "操作",
+            "desc": "是否静默执行（不弹倒计时窗口）",
+            "default": "false"
+          }
+        ],
+        "returns": [
+          [
+            "执行状态",
+            "status"
+          ]
+        ]
+      },
+      {
+        "name": "sleep",
+        "id": "system",
+        "desc": "系统睡眠，支持倒计时和静默执行",
+        "args": [
+          {
+            "name": "action",
+            "type": "static",
+            "desc": "命令类型（固定为 sleep）",
+            "default": ""
+          },
+          {
+            "name": "delay",
+            "type": "input",
+            "desc": "倒计时秒数，0 为立即执行",
+            "default": "10"
+          },
+          {
+            "name": "silence",
+            "type": "optional",
+            "desc": "是否静默执行（不弹倒计时窗口）",
+            "default": "false"
+          }
+        ],
+        "returns": [
+          [
+            "执行状态",
+            "status"
+          ]
+        ]
+      },
+      {
+        "name": "lockScreen",
+        "id": "system",
+        "desc": "锁屏，显示黑色全屏遮罩，支持倒计时",
+        "args": [
+          {
+            "name": "action",
+            "type": "static",
+            "desc": "命令类型（固定为 lockScreen）",
+            "default": ""
+          },
+          {
+            "name": "delay",
+            "type": "input",
+            "desc": "倒计时秒数，0 为立即执行",
+            "default": "10"
+          },
+          {
+            "name": "silence",
+            "type": "optional",
+            "desc": "是否静默执行（不弹倒计时窗口）",
+            "default": "false"
+          }
+        ],
+        "returns": [
+          [
+            "执行状态",
+            "status"
+          ]
+        ]
+      },
+      {
+        "name": "getSysVolume",
+        "id": "system",
+        "desc": "获取当前系统音量，返回 0~100 整数",
+        "args": [
+          {
+            "name": "action",
+            "type": "static",
+            "desc": "命令类型（固定为 getSysVolume）",
             "default": ""
           }
         ],
-        "returns": []
+        "returns": [
+          [
+            "当前音量（0~100）",
+            "volume"
+          ]
+        ]
+      },
+      {
+        "name": "setSysVolume",
+        "id": "system",
+        "desc": "设置系统音量",
+        "args": [
+          {
+            "name": "action",
+            "type": "static",
+            "desc": "命令类型（固定为 setSysVolume）",
+            "default": ""
+          },
+          {
+            "name": "vol",
+            "type": "input",
+            "desc": "音量值（0~100）",
+            "default": "50"
+          }
+        ],
+        "returns": [
+          [
+            "执行状态",
+            "status"
+          ]
+        ]
+      },
+      {
+        "name": "getSystemMuteStatus",
+        "id": "system",
+        "desc": "查询系统是否静音",
+        "args": [
+          {
+            "name": "action",
+            "type": "static",
+            "desc": "命令类型（固定为 getSystemMuteStatus）",
+            "default": ""
+          }
+        ],
+        "returns": [
+          [
+            "是否静音（1=静音，0=未静音）",
+            "muted"
+          ]
+        ]
+      },
+      {
+        "name": "setSystemMuteStatus",
+        "id": "system",
+        "desc": "切换系统静音状态",
+        "args": [
+          {
+            "name": "action",
+            "type": "static",
+            "desc": "命令类型（固定为 setSystemMuteStatus）",
+            "default": ""
+          },
+          {
+            "name": "status",
+            "type": "optional",
+            "desc": "静音状态",
+            "default": ""
+          }
+        ],
+        "returns": [
+          [
+            "执行状态",
+            "status"
+          ]
+        ]
       },
       {
         "name": "findWindowByTitle",
-        "id": "0x00000011",
-        "desc": "根据窗口标题查找窗口句柄",
+        "id": "system",
+        "desc": "根据窗口标题查找窗口句柄，返回十六进制 HWND",
         "args": [
           {
-            "name": "cmd",
-            "type": "optional",
-            "desc": "",
+            "name": "action",
+            "type": "static",
+            "desc": "命令类型（固定为 findWindowByTitle）",
             "default": ""
           },
           {
             "name": "title",
             "type": "input",
-            "desc": "窗口标题",
-            "default": "t"
+            "desc": "窗口标题（支持部分匹配）",
+            "default": ""
           }
         ],
         "returns": [
           [
-            "句柄",
+            "窗口句柄（十六进制字符串）",
             "hwnd"
           ]
         ]
       },
       {
         "name": "setWindowState",
-        "id": "0x00000011",
-        "desc": "设置窗口状态：隐藏、显示、最小化、最大化、恢复",
+        "id": "system",
+        "desc": "设置指定窗口的显示状态（隐藏/显示/最小化/最大化/恢复）",
         "args": [
           {
-            "name": "cmd",
-            "type": "optional",
-            "desc": "",
+            "name": "action",
+            "type": "static",
+            "desc": "命令类型（固定为 setWindowState）",
             "default": ""
           },
           {
             "name": "hwnd",
             "type": "input",
-            "desc": "句柄",
+            "desc": "窗口句柄（十六进制字符串）",
             "default": "0"
           },
           {
             "name": "state",
             "type": "optional",
-            "desc": "状态",
+            "desc": "窗口显示状态",
             "default": ""
           }
         ],
-        "returns": []
+        "returns": [
+          [
+            "执行状态",
+            "status"
+          ]
+        ]
       }
     ],
-    "logo": "nodes/plugin/sysOpTool-HXH/logo.png",
-    "readme": "# 系统操作工具\r\n\r\n操作系统功能（关机、睡眠、锁屏、窗口管理）。\r\n\r\n## 仓库地址\r\n\r\n- **GitHub**: https://github.com/hxh230802/sysOpTool\r\n\r\n## 下载地址\r\n\r\n- https://github.com/hxh230802/sysOpTool/releases/latest\r\n\r\n## 功能特性\r\n\r\n- **系统电源操作** — 关机、睡眠、锁屏\r\n- **窗口管理** — 按标题查找窗口、设置窗口状态（隐藏/显示/最小化/最大化/恢复）\r\n\r\n## 快速开始\r\n\r\n### 环境要求\r\n\r\n- Windows 10+ / macOS 12+\r\n- 其他依赖\r\n\r\n### 安装\r\n\r\n```bash\r\n# 安装步骤\r\n```\r\n\r\n### 使用\r\n\r\n```bash\r\n# 使用示例\r\n```\r\n\r\n## 技术栈\r\n\r\n- **语言** — Cpp\r\n- **框架** — Qt\r\n\r\n## 许可证\r\n\r\nCopyright © 2026 HXH. All rights reserved.\r\n",
-    "techs": [
-      "语言",
-      "框架"
-    ],
-    "features": [
-      "系统电源操作",
-      "窗口管理"
-    ]
+    "logo": "nodes/plugin/系统操作工具-hxh230802/logo.png",
+    "readme": "# 系统操作工具\r\n\r\n> KnotLink 插件节点 — 通过远程调用执行 Windows 系统操作\r\n\r\n## 功能简介\r\n\r\n提供关机、睡眠、锁屏、音量控制、窗口管理等 9 种系统操作接口，支持倒计时和静默执行模式。\r\n\r\n## 接口列表\r\n\r\n| 接口 | 说明 | 关键参数 |\r\n|------|------|----------|\r\n| `shutdown` | 定时关机 | `delay` 倒计时秒数，`silence` 是否静默 |\r\n| `sleep` | 系统睡眠 | `delay` 倒计时秒数，`silence` 是否静默 |\r\n| `lockScreen` | 锁屏（黑色遮罩） | `delay` 倒计时秒数，`silence` 是否静默 |\r\n| `getSysVolume` | 获取系统音量 | 无，返回 `volume`（0~100） |\r\n| `setSysVolume` | 设置系统音量 | `vol` 音量值（0~100） |\r\n| `getSystemMuteStatus` | 查询静音状态 | 无，返回 `muted`（1=静音） |\r\n| `setSystemMuteStatus` | 切换静音 | `status`（0=取消，1=静音） |\r\n| `findWindowByTitle` | 查找窗口句柄 | `title` 窗口标题，返回 `hwnd` |\r\n| `setWindowState` | 设置窗口状态 | `hwnd` 句柄，`state` 状态（隐藏/显示/最小化/最大化/恢复） |\r\n\r\n## 下载\r\n\r\n- 最新版本：[GitHub Releases](https://github.com/KnotLink-Nodes/sysOperateTool/releases/latest)\r\n- 节点市场：[knotlink.cn/nodes](https://knotlink.cn/nodes)\r\n\r\n## 许可证\r\n\r\nMIT\r\n"
   },
   {
     "id": "ClassIsland-信",
