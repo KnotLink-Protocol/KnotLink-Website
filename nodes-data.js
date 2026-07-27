@@ -1,7 +1,7 @@
 /**
  * nodes-data.js — 自动生成，请勿手动编辑
  * 由 build-nodes.js 扫描 nodes/ 文件夹生成
- * 生成时间: 2026-07-22T04:45:49.105Z
+ * 生成时间: 2026-07-27T12:38:51.515Z
  * 节点总数: 7 (插入式: 4, 独立式: 3)
  */
 window.__KNOTLINK_NODES__ = [
@@ -11,10 +11,17 @@ window.__KNOTLINK_NODES__ = [
     "typeLabel": "插入式",
     "typeIcon": "🧩",
     "dir": "plugin/Everything_node-HXH",
-    "name": "Everything_node-HXH",
+    "name": "Everything 搜索节点",
+    "author": "HXH",
+    "version": "v1.0.0",
+    "desc": "使用 Everything 搜索引擎执行文件搜索",
+    "appId": "com.everything.node",
+    "autoStart": "false",
+    "downloadUrl": "https://github.com/hxh230802/Everything_node/releases/latest",
+    "exePath": "Everything_node.exe",
     "appName": "Everything 搜索节点",
-    "specVersion": "",
-    "manifestVersion": "",
+    "specVersion": "1.0",
+    "manifestVersion": "1.0.0",
     "sockets": [
       {
         "name": "search",
@@ -63,6 +70,17 @@ window.__KNOTLINK_NODES__ = [
           ]
         ]
       }
+    ],
+    "logo": "nodes/plugin/Everything_node-HXH/logo.png",
+    "readme": "# Everything 搜索节点\r\n\r\n基于 [Everything](https://www.voidtools.com/) 的文件搜索节点，通过 KnotLink OpenSocket 协议提供文件搜索、结果计数和打开文件夹功能。\r\n\r\n## 仓库地址\r\n\r\n- **GitHub**: https://github.com/hxh230802/Everything_node\r\n\r\n## 下载地址\r\n\r\n- https://github.com/hxh230802/Everything_node/releases/latest\r\n\r\n## 功能特性\r\n\r\n- **文件搜索** — 使用 Everything 引擎搜索文件，返回路径列表\r\n- **结果计数** — 仅获取搜索结果数量\r\n- **打开文件夹** — 打开第一个搜索结果的所在文件夹\r\n\r\n## 快速开始\r\n\r\n### 环境要求\r\n\r\n- Windows 10+\r\n- [Everything](https://www.voidtools.com/) 已安装并运行\r\n\r\n### 安装\r\n\r\n```bash\r\n# 下载最新 release 中的 Everything_node.exe\r\n```\r\n\r\n## 技术栈\r\n\r\n- **语言** — Python\r\n- **依赖** — Everything SDK\r\n\r\n## 许可证\r\n\r\nCopyright © 2026 HXH. All rights reserved.\r\n",
+    "techs": [
+      "语言",
+      "依赖"
+    ],
+    "features": [
+      "文件搜索",
+      "结果计数",
+      "打开文件夹"
     ]
   },
   {
@@ -77,10 +95,11 @@ window.__KNOTLINK_NODES__ = [
     "desc": "在屏幕顶端弹出消息窗口",
     "appId": "0x00000014",
     "autoStart": "true",
+    "downloadUrl": "https://github.com/hxh230802/MsgNotification/releases/latest",
     "exePath": "MsgNotification.exe",
     "appName": "消息提醒",
-    "specVersion": "",
-    "manifestVersion": "",
+    "specVersion": "1.0",
+    "manifestVersion": "1.0.0",
     "sockets": [
       {
         "name": "ShowMsg",
@@ -98,7 +117,7 @@ window.__KNOTLINK_NODES__ = [
       }
     ],
     "logo": "nodes/plugin/MsgNotification-HXH/logo.png",
-    "readme": "# 全局消息提醒 (MsgNotification)\r\n\r\n基于 PyQt5 的 Windows 桌面消息提醒工具，通过 [KnotLink](https://github.com/hxh230802/KnotLink) 桥接系统接收来自其他应用的消息，并以动画 Toast 弹窗形式在屏幕顶部居中展示。\r\n\r\n## 功能特性\r\n\r\n- **动画 Toast 弹窗** — 消息从屏幕顶部滑入，停留 3.5 秒后自动滑出消失\r\n- **消息队列管理** — 最多同时展示 5 条消息，超出时排队等待，已有消息消失后自动补位\r\n- **OpenSocket 通信** — 通过 KnotLink 的 OpenSocket 机制接收跨进程消息，实时响应\r\n- **后台静默运行** — 无主窗口，系统托盘常驻，开机自启（安装版）\r\n- **高 DPI 适配** — 支持高分屏显示\r\n- **NSIS 安装包** — 提供完整的安装/卸载体验，支持版本检测与覆盖安装\r\n\r\n## 快速开始\r\n\r\n### 环境要求\r\n\r\n- Windows 10+\r\n- Python 3.8+\r\n- PyQt5\r\n\r\n### 安装依赖\r\n\r\n```bash\r\npip install PyQt5\r\n```\r\n\r\n> 本项目依赖 `KnotLinkClient_PyQt`（KnotLink 客户端库），请确保该库已安装在同一 Python 环境中。\r\n\r\n### 运行\r\n\r\n```bash\r\npython src/MsgNotification.py\r\n```\r\n\r\n程序启动后将在后台运行，通过 OpenSocket 接口（AppID: `0x00000014`, OpenSocketID: `0x00000010`）等待接收消息。\r\n\r\n### 编译资源文件\r\n\r\n修改图标等 Qt 资源后，需重新编译 `resources.py`：\r\n\r\n```bash\r\ncd src\r\npyrcc5 icon.qrc -o resources.py\r\n```\r\n\r\n## 项目结构\r\n\r\n```\r\nMsgNotification/\r\n├── src/\r\n│   ├── MsgNotification.py        # 主入口，创建 QApplication 和 OpenSocket 管理器\r\n│   ├── global_message_toast.py   # Toast 弹窗组件 + 消息队列管理器\r\n│   ├── opensocket_manager.py     # OpenSocket 通信与 Toast 的桥接层\r\n│   ├── resources.py              # 编译后的 Qt 资源（图标）\r\n│   ├── icon.qrc                  # Qt 资源定义文件\r\n│   └── 资源文件编译.bat           # 资源编译脚本\r\n├── assets/\r\n│   └── MsgNotification.ico       # 应用图标\r\n├── scripts/\r\n│   └── nsis/\r\n│       ├── MsgNotification.nsi   # NSIS 安装包脚本\r\n│       ├── compress.bat          # NSIS 打包脚本\r\n│       ├── Icon/                 # 安装包图标\r\n│       ├── AppFile/              # 待打包文件目录\r\n│       └── OtherFile/            # 安装界面素材（许可证、侧边图等）\r\n├── release/                      # 已发布的安装包\r\n├── 程序打包(nuitka).bat           # Nuitka 打包脚本\r\n└── 复制到NSIS待打包文件目录.bat    # 复制 exe 到 NSIS 目录\r\n```\r\n\r\n## 打包与发布\r\n\r\n### 1. Nuitka 打包\r\n\r\n将 Python 程序编译为独立 exe：\r\n\r\n```bash\r\npython -m nuitka --onefile --enable-plugin=pyqt5 --windows-disable-console --windows-icon-from-ico=\"assets/MsgNotification.ico\" --output-dir=\"dist\" src/MsgNotification.py\r\n```\r\n\r\n或直接运行 `程序打包(nuitka).bat`。\r\n\r\n### 2. NSIS 安装包\r\n\r\n1. 将 `dist/MsgNotification.exe` 复制到 `scripts/nsis/AppFile/exe/`\r\n2. 使用 NSIS 编译 `MsgNotification.nsi` 生成安装包\r\n\r\n```bash\r\n# 或运行\r\n复制到NSIS待打包文件目录.bat\r\ncd scripts/nsis\r\nmakensisw.exe MsgNotification.nsi\r\n```\r\n\r\n生成的安装包将位于 `scripts/nsis/bin/` 目录。\r\n\r\n## OpenSocket 接口\r\n\r\n应用通过以下接口接收消息：\r\n\r\n| 功能名称 | AppID | OpenSocketID | 参数 |\r\n|---------|-------|--------------|------|\r\n| ShowMsg | `0x00000014` | `0x00000010` | `msgContext` (string) — 消息内容 |\r\n\r\n收到消息后，应用会回复 `\"OK\"` 确认，并在屏幕上展示 Toast 弹窗。\r\n\r\n## 技术栈\r\n\r\n- **Python 3.8+** — 主语言\r\n- **PyQt5** — GUI 框架（动画、窗口管理）\r\n- **Nuitka** — Python 到 C 编译打包\r\n- **NSIS** — Windows 安装包制作\r\n- **KnotLink OpenSocket** — 跨进程通信\r\n\r\n## 许可证\r\n\r\nCopyright © 2026 创猿er. All rights reserved.\r\n\r\n---\r\n\r\n🔗 相关项目：[KnotLink](https://github.com/hxh230802/KnotLink) — 通用桥接系统\r\n",
+    "readme": "# 全局消息提醒 (MsgNotification)\r\n\r\n基于 PyQt5 的 Windows 桌面消息提醒工具，通过 [KnotLink](https://github.com/hxh230802/KnotLink) 桥接系统接收来自其他应用的消息，并以动画 Toast 弹窗形式在屏幕顶部居中展示。\r\n\r\n## 仓库地址\r\n\r\n- **GitHub**: https://github.com/hxh230802/MsgNotification\r\n\r\n## 功能特性\r\n\r\n- **动画 Toast 弹窗** — 消息从屏幕顶部滑入，停留 3.5 秒后自动滑出消失\r\n- **消息队列管理** — 最多同时展示 5 条消息，超出时排队等待，已有消息消失后自动补位\r\n- **OpenSocket 通信** — 通过 KnotLink 的 OpenSocket 机制接收跨进程消息，实时响应\r\n- **后台静默运行** — 无主窗口，系统托盘常驻，开机自启（安装版）\r\n- **高 DPI 适配** — 支持高分屏显示\r\n- **NSIS 安装包** — 提供完整的安装/卸载体验，支持版本检测与覆盖安装\r\n\r\n## 快速开始\r\n\r\n### 环境要求\r\n\r\n- Windows 10+\r\n- Python 3.8+\r\n- PyQt5\r\n\r\n### 安装依赖\r\n\r\n```bash\r\npip install PyQt5\r\n```\r\n\r\n> 本项目依赖 `KnotLinkClient_PyQt`（KnotLink 客户端库），请确保该库已安装在同一 Python 环境中。\r\n\r\n### 运行\r\n\r\n```bash\r\npython src/MsgNotification.py\r\n```\r\n\r\n程序启动后将在后台运行，通过 OpenSocket 接口（AppID: `0x00000014`, OpenSocketID: `0x00000010`）等待接收消息。\r\n\r\n### 编译资源文件\r\n\r\n修改图标等 Qt 资源后，需重新编译 `resources.py`：\r\n\r\n```bash\r\ncd src\r\npyrcc5 icon.qrc -o resources.py\r\n```\r\n\r\n## 项目结构\r\n\r\n```\r\nMsgNotification/\r\n├── src/\r\n│   ├── MsgNotification.py        # 主入口，创建 QApplication 和 OpenSocket 管理器\r\n│   ├── global_message_toast.py   # Toast 弹窗组件 + 消息队列管理器\r\n│   ├── opensocket_manager.py     # OpenSocket 通信与 Toast 的桥接层\r\n│   ├── resources.py              # 编译后的 Qt 资源（图标）\r\n│   ├── icon.qrc                  # Qt 资源定义文件\r\n│   └── 资源文件编译.bat           # 资源编译脚本\r\n├── assets/\r\n│   └── MsgNotification.ico       # 应用图标\r\n├── scripts/\r\n│   └── nsis/\r\n│       ├── MsgNotification.nsi   # NSIS 安装包脚本\r\n│       ├── compress.bat          # NSIS 打包脚本\r\n│       ├── Icon/                 # 安装包图标\r\n│       ├── AppFile/              # 待打包文件目录\r\n│       └── OtherFile/            # 安装界面素材（许可证、侧边图等）\r\n├── release/                      # 已发布的安装包\r\n├── 程序打包(nuitka).bat           # Nuitka 打包脚本\r\n└── 复制到NSIS待打包文件目录.bat    # 复制 exe 到 NSIS 目录\r\n```\r\n\r\n## 打包与发布\r\n\r\n### 1. Nuitka 打包\r\n\r\n将 Python 程序编译为独立 exe：\r\n\r\n```bash\r\npython -m nuitka --onefile --enable-plugin=pyqt5 --windows-disable-console --windows-icon-from-ico=\"assets/MsgNotification.ico\" --output-dir=\"dist\" src/MsgNotification.py\r\n```\r\n\r\n或直接运行 `程序打包(nuitka).bat`。\r\n\r\n### 2. NSIS 安装包\r\n\r\n1. 将 `dist/MsgNotification.exe` 复制到 `scripts/nsis/AppFile/exe/`\r\n2. 使用 NSIS 编译 `MsgNotification.nsi` 生成安装包\r\n\r\n```bash\r\n# 或运行\r\n复制到NSIS待打包文件目录.bat\r\ncd scripts/nsis\r\nmakensisw.exe MsgNotification.nsi\r\n```\r\n\r\n生成的安装包将位于 `scripts/nsis/bin/` 目录。\r\n\r\n## OpenSocket 接口\r\n\r\n应用通过以下接口接收消息：\r\n\r\n| 功能名称 | AppID | OpenSocketID | 参数 |\r\n|---------|-------|--------------|------|\r\n| ShowMsg | `0x00000014` | `0x00000010` | `msgContext` (string) — 消息内容 |\r\n\r\n收到消息后，应用会回复 `\"OK\"` 确认，并在屏幕上展示 Toast 弹窗。\r\n\r\n## 技术栈\r\n\r\n- **Python 3.8+** — 主语言\r\n- **PyQt5** — GUI 框架（动画、窗口管理）\r\n- **Nuitka** — Python 到 C 编译打包\r\n- **NSIS** — Windows 安装包制作\r\n- **KnotLink OpenSocket** — 跨进程通信\r\n\r\n## 许可证\r\n\r\nCopyright © 2026 创猿er. All rights reserved.\r\n\r\n---\r\n\r\n🔗 相关项目：[KnotLink](https://github.com/hxh230802/KnotLink) — 通用桥接系统\r\n",
     "techs": [
       "Python 3.8+",
       "PyQt5",
@@ -121,10 +140,17 @@ window.__KNOTLINK_NODES__ = [
     "typeLabel": "插入式",
     "typeIcon": "🧩",
     "dir": "plugin/MultiTTS_Client-HXH",
-    "name": "MultiTTS_Client-HXH",
+    "name": "MultiTTS",
+    "author": "HXH",
+    "version": "v1.0.0",
+    "desc": "多引擎 TTS 语音合成客户端",
+    "appId": "0x00000022",
+    "autoStart": "false",
+    "downloadUrl": "https://github.com/hxh230802/MultiTTS_Client/releases/latest",
+    "exePath": "MultiTTS_Client.exe",
     "appName": "MultiTTS",
-    "specVersion": "",
-    "manifestVersion": "",
+    "specVersion": "1.0",
+    "manifestVersion": "1.0.0",
     "sockets": [
       {
         "name": "SysTTS",
@@ -258,6 +284,17 @@ window.__KNOTLINK_NODES__ = [
         ],
         "returns": []
       }
+    ],
+    "logo": "nodes/plugin/MultiTTS_Client-HXH/logo.png",
+    "readme": "# MultiTTS\r\n\r\n多引擎 TTS 语音合成客户端，通过 KnotLink OpenSocket 协议提供系统 TTS、Edge TTS 和 GPT-SoVITS 三种语音合成引擎的调用接口。\r\n\r\n## 仓库地址\r\n\r\n- **GitHub**: https://github.com/hxh230802/MultiTTS_Client\r\n\r\n## 下载地址\r\n\r\n- https://github.com/hxh230802/MultiTTS_Client/releases/latest\r\n\r\n## 功能特性\r\n\r\n- **系统 TTS** — 调用 Windows 系统自带语音引擎，支持语速/音量/讲述者调节\r\n- **Edge TTS** — 调用 Microsoft Edge 在线语音合成，支持多种神经语音\r\n- **GPT-SoVITS** — 调用本地 GPT-SoVITS 服务，支持参考音频克隆语音\r\n\r\n## 快速开始\r\n\r\n### 环境要求\r\n\r\n- Windows 10+\r\n- Python 3.8+\r\n\r\n### 安装\r\n\r\n```bash\r\npip install -r requirements.txt\r\n```\r\n\r\n## 技术栈\r\n\r\n- **语言** — Python\r\n- **TTS 引擎** — Windows SAPI / Edge TTS / GPT-SoVITS\r\n\r\n## 许可证\r\n\r\nCopyright © 2026 HXH. All rights reserved.\r\n",
+    "techs": [
+      "语言",
+      "TTS 引擎"
+    ],
+    "features": [
+      "系统 TTS",
+      "Edge TTS",
+      "GPT-SoVITS"
     ]
   },
   {
@@ -272,15 +309,16 @@ window.__KNOTLINK_NODES__ = [
     "desc": "操作系统功能",
     "appId": "0x00000015",
     "autoStart": "false",
+    "downloadUrl": "https://github.com/hxh230802/sysOpTool/releases/latest",
     "exePath": "sysOpTool.exe",
     "appName": "系统操作工具",
-    "specVersion": "",
-    "manifestVersion": "",
+    "specVersion": "1.0",
+    "manifestVersion": "1.0.0",
     "sockets": [
       {
         "name": "SSS",
         "id": "0x00000011",
-        "desc": "",
+        "desc": "系统电源操作：关机、睡眠、锁屏",
         "args": [
           {
             "name": "cmd",
@@ -294,7 +332,7 @@ window.__KNOTLINK_NODES__ = [
       {
         "name": "findWindowByTitle",
         "id": "0x00000011",
-        "desc": "",
+        "desc": "根据窗口标题查找窗口句柄",
         "args": [
           {
             "name": "cmd",
@@ -319,7 +357,7 @@ window.__KNOTLINK_NODES__ = [
       {
         "name": "setWindowState",
         "id": "0x00000011",
-        "desc": "",
+        "desc": "设置窗口状态：隐藏、显示、最小化、最大化、恢复",
         "args": [
           {
             "name": "cmd",
@@ -343,10 +381,15 @@ window.__KNOTLINK_NODES__ = [
         "returns": []
       }
     ],
-    "readme": "# 系统操作工具\r\n\r\n操作系统功能\r\n\r\n## 官方网站 / 下载\r\n\r\n暂无\r\n\r\n## 功能特性\r\n\r\n- 暂无\r\n\r\n## 快速开始\r\n\r\n### 环境要求\r\n\r\n- Windows 10+ / macOS 12+\r\n- 其他依赖\r\n\r\n### 安装\r\n\r\n```bash\r\n# 安装步骤\r\n```\r\n\r\n### 使用\r\n\r\n```bash\r\n# 使用示例\r\n```\r\n\r\n## 技术栈\r\n\r\n- **语言** — Cpp\r\n- **框架** — Qt\r\n\r\n## 许可证\r\n\r\nCopyright © 2026 HXH. All rights reserved.\r\n",
+    "logo": "nodes/plugin/sysOpTool-HXH/logo.png",
+    "readme": "# 系统操作工具\r\n\r\n操作系统功能（关机、睡眠、锁屏、窗口管理）。\r\n\r\n## 仓库地址\r\n\r\n- **GitHub**: https://github.com/hxh230802/sysOpTool\r\n\r\n## 下载地址\r\n\r\n- https://github.com/hxh230802/sysOpTool/releases/latest\r\n\r\n## 功能特性\r\n\r\n- **系统电源操作** — 关机、睡眠、锁屏\r\n- **窗口管理** — 按标题查找窗口、设置窗口状态（隐藏/显示/最小化/最大化/恢复）\r\n\r\n## 快速开始\r\n\r\n### 环境要求\r\n\r\n- Windows 10+ / macOS 12+\r\n- 其他依赖\r\n\r\n### 安装\r\n\r\n```bash\r\n# 安装步骤\r\n```\r\n\r\n### 使用\r\n\r\n```bash\r\n# 使用示例\r\n```\r\n\r\n## 技术栈\r\n\r\n- **语言** — Cpp\r\n- **框架** — Qt\r\n\r\n## 许可证\r\n\r\nCopyright © 2026 HXH. All rights reserved.\r\n",
     "techs": [
       "语言",
       "框架"
+    ],
+    "features": [
+      "系统电源操作",
+      "窗口管理"
     ]
   },
   {
@@ -355,10 +398,16 @@ window.__KNOTLINK_NODES__ = [
     "typeLabel": "独立式",
     "typeIcon": "🚀",
     "dir": "standalone/ClassIsland-信",
-    "name": "ClassIsland-信",
+    "name": "ClassIsland",
+    "author": "信",
+    "version": "v1.0.0",
+    "desc": "课程信息与桌面通知服务",
+    "appId": "0x00000031",
+    "autoStart": "false",
+    "downloadUrl": "https://github.com/hxh230802/ClassIsland/releases/latest",
     "appName": "ClassIsland",
-    "specVersion": "",
-    "manifestVersion": "",
+    "specVersion": "1.0",
+    "manifestVersion": "1.0.0",
     "sockets": [
       {
         "name": "ClassService",
@@ -495,6 +544,16 @@ window.__KNOTLINK_NODES__ = [
           }
         ]
       }
+    ],
+    "logo": "nodes/standalone/ClassIsland-信/logo.png",
+    "readme": "# ClassIsland\r\n\r\n课程信息与通知服务节点，通过 KnotLink OpenSocket 协议提供当前/下节课程查询、桌面通知提醒及课程事件信号。\r\n\r\n## 仓库地址\r\n\r\n- **GitHub**: https://github.com/hxh230802/ClassIsland\r\n\r\n## 下载地址\r\n\r\n- https://github.com/hxh230802/ClassIsland/releases/latest\r\n\r\n## 功能特性\r\n\r\n- **课程查询** — 获取当前课程、下节课程信息（课程名、教师名）\r\n- **桌面通知** — 推送遮罩和正文提醒，支持语音播报\r\n- **课程事件信号** — 上课/下课/放学等事件主动推送\r\n\r\n## 快速开始\r\n\r\n### 环境要求\r\n\r\n- Windows 10+\r\n\r\n## 技术栈\r\n\r\n- **框架** — WPF / .NET\r\n\r\n## 许可证\r\n\r\nCopyright © 2026 信. All rights reserved.\r\n",
+    "techs": [
+      "框架"
+    ],
+    "features": [
+      "课程查询",
+      "桌面通知",
+      "课程事件信号"
     ]
   },
   {
@@ -508,9 +567,12 @@ window.__KNOTLINK_NODES__ = [
     "version": "v1.0.0",
     "desc": "提供屏幕批注相关功能",
     "appId": "0x00000031",
-    "appName": "Ink Canvas",
-    "specVersion": "",
-    "manifestVersion": "",
+    "autoStart": "false",
+    "downloadUrl": "https://github.com/hxh230802/ICK/releases/latest",
+    "exePath": "Ink Canvas.exe",
+    "appName": "ICK",
+    "specVersion": "1.0",
+    "manifestVersion": "1.0.0",
     "sockets": [
       {
         "name": "GetStatus",
@@ -965,8 +1027,14 @@ window.__KNOTLINK_NODES__ = [
       }
     ],
     "logo": "nodes/standalone/ICK/logo.png",
-    "readme": "# ICK\r\n\r\n提供屏幕批注相关功能。\r\n\r\n## 官方网站 / 下载\r\n\r\n\r\n\r\n## 功能特性\r\n\r\n\r\n\r\n## 快速开始\r\n\r\n### 环境要求\r\n\r\n- Windows 10+ / macOS 12+\r\n- 其他依赖\r\n\r\n### 安装\r\n\r\n```bash\r\n# 安装步骤\r\n```\r\n\r\n### 使用\r\n\r\n```bash\r\n\r\n```\r\n\r\n## 技术栈\r\n\r\n\r\n\r\n## 许可证\r\n\r\nCopyright © 2026 XY Wang & HXH. All rights reserved.\r\n",
-    "techs": []
+    "readme": "# ICK\r\n\r\n提供屏幕批注相关功能（Ink Canvas 画布控制、函数绘制等）。\r\n\r\n## 仓库地址\r\n\r\n- **GitHub**: https://github.com/hxh230802/ICK\r\n\r\n## 下载地址\r\n\r\n- https://github.com/hxh230802/ICK/releases/latest\r\n\r\n## 功能特性\r\n\r\n- **墨迹画布控制** — 显示/隐藏画布、切换笔/橡皮擦/光标模式、清空/撤销/重做\r\n- **屏幕批注** — 屏幕模式（透明背景）、白板/黑板模式\r\n- **悬浮工具栏** — 移动到屏幕各方位、展开/收起\r\n- **函数绘制** — 支持 LaTeX 表达式绘制数学函数图像\r\n\r\n\r\n\r\n## 快速开始\r\n\r\n### 环境要求\r\n\r\n- Windows 10+ / macOS 12+\r\n- 其他依赖\r\n\r\n### 安装\r\n\r\n```bash\r\n# 安装步骤\r\n```\r\n\r\n### 使用\r\n\r\n```bash\r\n\r\n```\r\n\r\n## 技术栈\r\n\r\n\r\n\r\n## 许可证\r\n\r\nCopyright © 2026 XY Wang & HXH. All rights reserved.\r\n",
+    "techs": [],
+    "features": [
+      "墨迹画布控制",
+      "屏幕批注",
+      "悬浮工具栏",
+      "函数绘制"
+    ]
   },
   {
     "id": "NamePicker",
@@ -974,10 +1042,16 @@ window.__KNOTLINK_NODES__ = [
     "typeLabel": "独立式",
     "typeIcon": "🚀",
     "dir": "standalone/NamePicker",
-    "name": "NamePicker",
+    "name": "RandomPicker",
+    "author": "HXH",
+    "version": "v1.0.0",
+    "desc": "随机点名与学生名单管理",
+    "appId": "cn.knotlink.namepicker",
+    "autoStart": "false",
+    "downloadUrl": "https://github.com/hxh230802/NamePicker/releases/latest",
     "appName": "RandomPicker",
-    "specVersion": "",
-    "manifestVersion": "",
+    "specVersion": "1.0",
+    "manifestVersion": "1.0.0",
     "sockets": [
       {
         "name": "pick",
@@ -1184,7 +1258,7 @@ window.__KNOTLINK_NODES__ = [
       {
         "name": "onPickSingle",
         "desc": "单次点名触发时",
-        "appId": "NamePicker",
+        "appId": "cn.knotlink.namepicker",
         "signalId": "onPick",
         "returns": [
           {
@@ -1209,6 +1283,14 @@ window.__KNOTLINK_NODES__ = [
           }
         ]
       }
+    ],
+    "logo": "nodes/standalone/NamePicker/logo.png",
+    "readme": "# RandomPicker\r\n\r\n随机点名工具，通过 KnotLink OpenSocket 协议提供单人/多人随机抽取、学生名单管理及点名事件信号。\r\n\r\n## 仓库地址\r\n\r\n- **GitHub**: https://github.com/hxh230802/NamePicker\r\n\r\n## 下载地址\r\n\r\n- https://github.com/hxh230802/NamePicker/releases/latest\r\n\r\n## 功能特性\r\n\r\n- **随机点名** — 单人随机抽取、多人批量抽取\r\n- **名单管理** — 查询名单、添加/删除/更新学生信息\r\n- **点名事件信号** — 点名触发时主动推送学生信息\r\n- **窗口控制** — 主窗口和托盘图标的显示/隐藏控制\r\n\r\n## 快速开始\r\n\r\n### 环境要求\r\n\r\n- Windows 10+\r\n\r\n## 许可证\r\n\r\nCopyright © 2026. All rights reserved.\r\n",
+    "features": [
+      "随机点名",
+      "名单管理",
+      "点名事件信号",
+      "窗口控制"
     ]
   }
 ];
