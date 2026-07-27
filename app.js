@@ -72,7 +72,7 @@ function renderRecipeWall() {
     recipes.slice(0, 15).forEach((recipe, i) => {
         const hasDetail = !!recipe.id;
         const tag = hasDetail ? 'a' : 'div';
-        const href = hasDetail ? ` href="recipe-detail.html?id=${encodeURIComponent(recipe.id)}"` : '';
+        const href = hasDetail ? `recipe-detail.html?id=${encodeURIComponent(recipe.id)}` : '';
 
         const item = document.createElement(tag);
         item.className = 'recipe-item';
