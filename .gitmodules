@@ -3,4 +3,4 @@
 	url = git@github.com:KnotLink-Protocol/KNodeIndex.git
 [submodule "recipes-market"]
 	path = recipes-market
-	url = git@github.com:KnotLink-Protocol/KRecipeIndex.git
+	url = git@github.com:KnotLink-Protocol/KRecipeMarket.git
