@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">配方详情 — KnotLink</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .page-hero { padding: 120px 0 40px; }
+        .breadcrumb { color: var(--color-text-muted); font-size: 0.85rem; margin-bottom: 28px; }
+        .breadcrumb a { color: var(--color-text-dim); transition: color .2s; }
+        .breadcrumb a:hover { color: var(--color-text); }
+
+        .recipe-hero { display: flex; gap: 28px; align-items: flex-start; margin-bottom: 40px; flex-wrap: wrap; }
+        .recipe-hero-icon { width: 96px; height: 96px; border-radius: var(--radius-lg); background: rgba(229, 165, 10,.1); display: flex; align-items: center; justify-content: center; font-size: 3rem; flex-shrink: 0; border: 1px solid var(--color-border); }
+        .recipe-hero-info { flex: 1; min-width: 280px; }
+        .recipe-hero-info h1 { font-size: 2.2rem; font-weight: 800; margin-bottom: 6px; letter-spacing: -0.5px; }
+        .recipe-hero-meta { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; margin-bottom: 12px; font-size: 0.9rem; color: var(--color-text-dim); }
+        .recipe-hero-meta .badge { padding: 4px 12px; border-radius: 99px; font-size: 0.78rem; font-weight: 700; }
+        .badge-python { background: rgba(96,165,250,.15); color: var(--color-blue); }
+        .badge-version { background: rgba(52,211,153,.15); color: var(--color-green); }
+        .recipe-hero-desc { font-size: 1.05rem; color: var(--color-text-dim); line-height: 1.8; max-width: 720px; }
+
+        .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 48px; }
+        .detail-card { background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 28px; }
+        .detail-card.full-width { grid-column: 1 / -1; }
+        .detail-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+
+        .tag-list { display: flex; flex-wrap: wrap; gap: 8px; }
+        .tag-list span { padding: 6px 14px; border-radius: 99px; font-size: 0.82rem; background: rgba(229, 165, 10,.08); color: var(--color-accent); border: 1px solid rgba(229, 165, 10,.15); }
+
+        .app-link-card { background: var(--color-bg-alt); border-radius: var(--radius-md); padding: 16px; border: 1px solid var(--color-border); display: flex; align-items: center; gap: 14px; transition: all .2s; }
+        .app-link-card:hover { border-color: rgba(229, 165, 10,.3); }
+        .app-link-card .al-icon { font-size: 1.6rem; }
+        .app-link-card .al-info { flex: 1; }
+        .app-link-card .al-name { font-weight: 700; font-size: 0.95rem; }
+        .app-link-card .al-role { font-size: 0.78rem; color: var(--color-text-muted); }
+        .app-link-card .al-meta { font-size: 0.72rem; color: var(--color-text-muted); font-family: var(--font-mono); margin-top: 2px; }
+        .app-link-card .al-arrow { color: var(--color-text-muted); font-size: 1.2rem; }
+
+        .info-table { width: 100%; font-size: 0.88rem; }
+        .info-table tr { border-bottom: 1px solid rgba(255,255,255,.03); }
+        .info-table td { padding: 10px 0; }
+        .info-table td:first-child { color: var(--color-text-muted); width: 100px; font-weight: 600; }
+        .info-table td:last-child { color: var(--color-text-dim); font-family: var(--font-mono); font-size: 0.82rem; }
+
+        .dep-list { display: flex; flex-direction: column; gap: 6px; }
+        .dep-list .dep-item { font-family: var(--font-mono); font-size: 0.82rem; color: var(--color-text-dim); padding: 6px 12px; background: var(--color-bg-alt); border-radius: var(--radius-sm); }
+
+        .action-bar { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 48px; }
+        .action-bar .btn { display: inline-flex; align-items: center; gap: 6px; }
+
+        .recipe-404 { text-align: center; padding: 120px 20px; }
+        .recipe-404 .big-icon { font-size: 4rem; margin-bottom: 16px; }
+        .recipe-404 h2 { font-size: 1.8rem; margin-bottom: 8px; }
+        .recipe-404 p { color: var(--color-text-dim); margin-bottom: 24px; }
+
+        @media (max-width: 768px) { .detail-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="container nav-inner">
+        <a href="index.html" class="nav-brand">
+            <img src="logo.png" alt="KnotLink" class="nav-logo-small">
+            <span>KnotLink</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="nodes.html">节点</a></li>
+            <li><a href="recipes.html">配方</a></li>
+            <li><a href="scenarios.html">场景</a></li>
+            <li><a href="tutorials.html" class="btn-nav">快速开始</a></li>
+        </ul>
+    </div>
+</nav>
+
+<section class="page-hero">
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="recipes.html">← 返回配方中心</a>
+        </div>
+        <div id="recipeDetail">
+            <!-- JS 动态渲染 -->
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container footer-grid">
+        <div class="footer-brand">
+            <img src="logo.png" alt="KnotLink" class="footer-logo">
+            <p>KnotLink — 本地应用协作通信协议</p>
+        </div>
+        <div class="footer-links">
+            <h4>产品</h4>
+            <a href="nodes.html">节点索引</a>
+            <a href="recipes.html">配方中心</a>
+            <a href="scenarios.html">典型场景</a>
+        </div>
+        <div class="footer-links">
+            <h4>开发者</h4>
+            <a href="https://docs.knotlink.cn" target="_blank">文档</a>
+            <a href="https://github.com/KnotLink-Protocol/KnotLinkSDK" target="_blank">SDK</a>
+            <a href="https://docs.knotlink.cn/protocol-standard/function-spec" target="_blank">API 参考</a>
+        </div>
+        <div class="footer-links">
+            <h4>关于</h4>
+            <a href="compare.html">方案对比</a>
+            <a href="https://github.com/KnotLink-Protocol" target="_blank">GitHub</a>
+            <a href="https://github.com/KnotLink-Protocol" target="_blank">社区</a>
+        </div>
+    </div>
+    <div class="container footer-bottom">
+        <p>&copy; 2025 KnotLink. All rights reserved.</p>
+    </div>
+</footer>
+
+<script src="nodes-data.js"></script>
+<script src="recipes-data.js"></script>
+<script>
+// =============================================
+// Recipe Detail Page
+// =============================================
+
+function getRecipes() {
+    return window.__KNOTLINK_RECIPES__ || [];
+}
+
+function getNodes() {
+    return window.__KNOTLINK_NODES__ || [];
+}
+
+function getRecipeById(id) {
+    return getRecipes().find(r => r.id === id);
+}
+
+function buildNodeAppIdMap() {
+    const map = {}; // app_id → node
+    const nodes = getNodes();
+    for (const node of nodes) {
+        // Map by appId from manifest
+        if (node.appId) map[node.appId] = node;
+        // Also map by id (directory name)
+        if (node.id) map[node.id] = node;
+    }
+    return map;
+}
+
+function render() {
+    const params = new URLSearchParams(window.location.search);
+    const recipeId = params.get('id');
+    const container = document.getElementById('recipeDetail');
+
+    if (!recipeId) {
+        container.innerHTML = `
+            <div class="recipe-404">
+                <div class="big-icon">🔍</div>
+                <h2>未指定配方</h2>
+                <p>请从配方中心选择一个配方查看。</p>
+                <a href="recipes.html" class="btn btn-primary">浏览配方中心</a>
+            </div>`;
+        document.title = '配方详情 — KnotLink';
+        return;
+    }
+
+    const recipe = getRecipeById(recipeId);
+
+    if (!recipe) {
+        container.innerHTML = `
+            <div class="recipe-404">
+                <div class="big-icon">🧪</div>
+                <h2>配方未找到</h2>
+                <p>找不到 id 为 "${recipeId}" 的配方。它可能已被移除或链接有误。</p>
+                <a href="recipes.html" class="btn btn-primary">浏览配方中心</a>
+            </div>`;
+        document.title = '配方未找到 — KnotLink';
+        return;
+    }
+
+    document.title = `${recipe.name} — KnotLink 配方`;
+    document.getElementById('pageTitle').textContent = `${recipe.name} — KnotLink 配方`;
+
+    const nodeMap = buildNodeAppIdMap();
+
+    // Build linked apps HTML
+    const linkedAppsHtml = recipe.links.map(link => {
+        const node = nodeMap[link.app_id];
+        const nodeLink = node
+            ? `<a href="node-detail.html?id=${encodeURIComponent(node.id)}" class="app-link-card" style="text-decoration:none;color:inherit">`
+            : `<div class="app-link-card">`;
+        const nodeEnd = node ? `</a>` : `</div>`;
+        return `${nodeLink}
+            <div class="al-icon">🧩</div>
+            <div class="al-info">
+                <div class="al-name">${link.app_name}</div>
+                <div class="al-role">${link.role}</div>
+            </div>
+            <div class="al-meta">${link.app_id} &ge; ${link.min_version}</div>
+            ${node ? '<span class="al-arrow">→</span>' : ''}
+        ${nodeEnd}`;
+    }).join('');
+
+    // Build dependencies HTML
+    let depsHtml = '<p style="color:var(--color-text-muted);font-size:0.86rem">无特殊依赖</p>';
+    if (recipe.requires) {
+        const parts = [];
+        if (recipe.requires.python) {
+            parts.push(`<div class="dep-item">🐍 Python ${recipe.requires.python}</div>`);
+        }
+        if (recipe.requires.packages && recipe.requires.packages.length > 0) {
+            parts.push(...recipe.requires.packages.map(p => `<div class="dep-item">📦 ${p}</div>`));
+        }
+        if (parts.length > 0) depsHtml = parts.join('');
+    }
+
+    container.innerHTML = `
+        <div class="recipe-hero">
+            <div class="recipe-hero-icon">${recipe.icon}</div>
+            <div class="recipe-hero-info">
+                <h1>${recipe.name}</h1>
+                <div class="recipe-hero-meta">
+                    <span class="badge badge-python">Python</span>
+                    <span class="badge badge-version">v${recipe.version}</span>
+                    <span>👤 ${recipe.author}</span>
+                    ${recipe.license ? `<span>📜 ${recipe.license}</span>` : ''}
+                </div>
+                <p class="recipe-hero-desc">${recipe.description}</p>
+            </div>
+        </div>
+
+        <div class="action-bar">
+            <a href="recipes-market/${recipe.path}" class="btn btn-primary" download>
+                ⬇ 下载配方文件
+            </a>
+            <a href="https://github.com/KnotLink-Protocol/KNodeIndex/blob/master/recipes-market/${recipe.path}" target="_blank" class="btn btn-outline">
+                📂 在 GitHub 查看源码
+            </a>
+        </div>
+
+        <div class="detail-grid">
+            <div class="detail-card">
+                <h3>🔗 联动应用 (${recipe.links.length})</h3>
+                <div style="display:flex;flex-direction:column;gap:10px">
+                    ${linkedAppsHtml}
+                </div>
+            </div>
+
+            <div class="detail-card">
+                <h3>🏷️ 标签</h3>
+                <div class="tag-list">
+                    ${recipe.tags.map(t => `<span>${t}</span>`).join('')}
+                </div>
+            </div>
+
+            <div class="detail-card">
+                <h3>📋 基本信息</h3>
+                <table class="info-table">
+                    <tr><td>配方 ID</td><td>${recipe.id}</td></tr>
+                    <tr><td>版本</td><td>v${recipe.version}</td></tr>
+                    <tr><td>作者</td><td>${recipe.author}</td></tr>
+                    <tr><td>许可证</td><td>${recipe.license || '未指定'}</td></tr>
+                    ${recipe.created ? `<tr><td>创建日期</td><td>${recipe.created}</td></tr>` : ''}
+                    ${recipe.updated ? `<tr><td>更新日期</td><td>${recipe.updated}</td></tr>` : ''}
+                </table>
+            </div>
+
+            <div class="detail-card">
+                <h3>📦 依赖要求</h3>
+                <div class="dep-list">${depsHtml}</div>
+            </div>
+        </div>
+    `;
+}
+
+document.addEventListener('DOMContentLoaded', render);
+</script>
+</body>
+</html>
