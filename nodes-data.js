@@ -1,8 +1,8 @@
 /**
  * nodes-data.js — 自动生成，请勿手动编辑
  * 由 build-nodes.js 扫描 nodes/ 文件夹生成
- * 生成时间: 2026-07-27T14:44:51.512Z
- * 节点总数: 7 (插入式: 4, 独立式: 3)
+ * 生成时间: 2026-07-27T14:53:54.976Z
+ * 节点总数: 8 (插入式: 5, 独立式: 3)
  */
 window.__KNOTLINK_NODES__ = [
   {
@@ -555,6 +555,199 @@ window.__KNOTLINK_NODES__ = [
     ],
     "logo": "nodes/plugin/系统操作工具-hxh230802/logo.png",
     "readme": "# 系统操作工具\r\n\r\n> KnotLink 插件节点 — 通过远程调用执行 Windows 系统操作\r\n\r\n## 功能简介\r\n\r\n提供关机、睡眠、锁屏、音量控制、窗口管理等 9 种系统操作接口，支持倒计时和静默执行模式。\r\n\r\n## 接口列表\r\n\r\n| 接口 | 说明 | 关键参数 |\r\n|------|------|----------|\r\n| `shutdown` | 定时关机 | `delay` 倒计时秒数，`silence` 是否静默 |\r\n| `sleep` | 系统睡眠 | `delay` 倒计时秒数，`silence` 是否静默 |\r\n| `lockScreen` | 锁屏（黑色遮罩） | `delay` 倒计时秒数，`silence` 是否静默 |\r\n| `getSysVolume` | 获取系统音量 | 无，返回 `volume`（0~100） |\r\n| `setSysVolume` | 设置系统音量 | `vol` 音量值（0~100） |\r\n| `getSystemMuteStatus` | 查询静音状态 | 无，返回 `muted`（1=静音） |\r\n| `setSystemMuteStatus` | 切换静音 | `status`（0=取消，1=静音） |\r\n| `findWindowByTitle` | 查找窗口句柄 | `title` 窗口标题，返回 `hwnd` |\r\n| `setWindowState` | 设置窗口状态 | `hwnd` 句柄，`state` 状态（隐藏/显示/最小化/最大化/恢复） |\r\n\r\n## 下载\r\n\r\n- 最新版本：[GitHub Releases](https://github.com/KnotLink-Nodes/sysOperateTool/releases/latest)\r\n- 节点市场：[knotlink.cn/nodes](https://knotlink.cn/nodes)\r\n\r\n## 许可证\r\n\r\nMIT\r\n"
+  },
+  {
+    "id": "系统监控-hxh230802",
+    "type": "plugin",
+    "typeLabel": "插入式",
+    "typeIcon": "🧩",
+    "dir": "plugin/系统监控-hxh230802",
+    "name": "系统监控",
+    "author": "hxh230802",
+    "version": "v1.0.0",
+    "desc": "Windows 系统资源监控，支持 CPU、内存、磁盘 I/O、网络速率实时采集",
+    "appId": "com.github.hxh230802.systemmonitor",
+    "autoStart": "false",
+    "downloadUrl": "https://github.com/KnotLink-Nodes/system_monitor_win/releases/latest",
+    "exePath": "monitor.exe",
+    "appName": "系统监控",
+    "specVersion": "1.0",
+    "manifestVersion": "1.0.0",
+    "sockets": [
+      {
+        "name": "get-cpu",
+        "id": "system",
+        "desc": "获取 CPU 总使用率及各核心使用率",
+        "args": [
+          {
+            "name": "action",
+            "type": "static",
+            "desc": "数据类型（固定为 cpu）",
+            "default": ""
+          }
+        ],
+        "returns": [
+          [
+            "CPU 总使用率（%）",
+            "cpu_total"
+          ],
+          [
+            "各核心使用率（逗号分隔，%）",
+            "cpu_cores"
+          ]
+        ]
+      },
+      {
+        "name": "get-memory",
+        "id": "system",
+        "desc": "获取内存信息，含总量、已用、可用、使用率",
+        "args": [
+          {
+            "name": "action",
+            "type": "static",
+            "desc": "数据类型（固定为 memory）",
+            "default": ""
+          }
+        ],
+        "returns": [
+          [
+            "内存总量（字节）",
+            "memory_total_bytes"
+          ],
+          [
+            "已用内存（字节）",
+            "memory_used_bytes"
+          ],
+          [
+            "可用内存（字节）",
+            "memory_available_bytes"
+          ],
+          [
+            "内存使用率（%）",
+            "memory_usage_percent"
+          ]
+        ]
+      },
+      {
+        "name": "get-disk",
+        "id": "system",
+        "desc": "获取磁盘分区信息及 I/O 读写速率",
+        "args": [
+          {
+            "name": "action",
+            "type": "static",
+            "desc": "数据类型（固定为 disk）",
+            "default": ""
+          }
+        ],
+        "returns": [
+          [
+            "分区列表（盘符,总量,已用,空闲,使用率，竖线分隔）",
+            "disk_partitions"
+          ],
+          [
+            "磁盘读取速率（字节/秒）",
+            "disk_read_bytes_per_sec"
+          ],
+          [
+            "磁盘写入速率（字节/秒）",
+            "disk_write_bytes_per_sec"
+          ]
+        ]
+      },
+      {
+        "name": "get-network",
+        "id": "system",
+        "desc": "获取各网卡收发速率及总速率",
+        "args": [
+          {
+            "name": "action",
+            "type": "static",
+            "desc": "数据类型（固定为 network）",
+            "default": ""
+          }
+        ],
+        "returns": [
+          [
+            "总接收速率（字节/秒）",
+            "network_total_recv_bytes_per_sec"
+          ],
+          [
+            "总发送速率（字节/秒）",
+            "network_total_send_bytes_per_sec"
+          ],
+          [
+            "各接口详情（名称,收,发，竖线分隔）",
+            "network_interfaces"
+          ]
+        ]
+      },
+      {
+        "name": "get-all",
+        "id": "system",
+        "desc": "获取全部系统监控数据（CPU、内存、磁盘、网络）",
+        "args": [
+          {
+            "name": "action",
+            "type": "static",
+            "desc": "数据类型（固定为 all）",
+            "default": ""
+          }
+        ],
+        "returns": [
+          [
+            "CPU 总使用率",
+            "cpu_total"
+          ],
+          [
+            "各核心使用率",
+            "cpu_cores"
+          ],
+          [
+            "内存总量",
+            "memory_total_bytes"
+          ],
+          [
+            "已用内存",
+            "memory_used_bytes"
+          ],
+          [
+            "可用内存",
+            "memory_available_bytes"
+          ],
+          [
+            "内存使用率",
+            "memory_usage_percent"
+          ],
+          [
+            "分区列表",
+            "disk_partitions"
+          ],
+          [
+            "磁盘读取速率",
+            "disk_read_bytes_per_sec"
+          ],
+          [
+            "磁盘写入速率",
+            "disk_write_bytes_per_sec"
+          ],
+          [
+            "网络总接收速率",
+            "network_total_recv_bytes_per_sec"
+          ],
+          [
+            "网络总发送速率",
+            "network_total_send_bytes_per_sec"
+          ],
+          [
+            "各网络接口详情",
+            "network_interfaces"
+          ]
+        ]
+      }
+    ],
+    "logo": "nodes/plugin/系统监控-hxh230802/logo.png",
+    "readme": "# 系统监控\r\n\r\n> KnotLink 插件节点 — Windows 系统资源实时监控\r\n\r\n## 功能简介\r\n\r\n采集 Windows 系统资源数据，支持 CPU、内存、磁盘 I/O、网络速率四大类指标，通过 KnotLink 接口实时对外提供。\r\n\r\n## 接口列表\r\n\r\n| 接口 | 说明 | 返回字段 |\r\n|------|------|----------|\r\n| `get-cpu` | CPU 总使用率及各核心使用率 | `cpu_total`, `cpu_cores` |\r\n| `get-memory` | 内存总量、已用、可用、使用率 | `memory_total_bytes`, `memory_used_bytes`, `memory_available_bytes`, `memory_usage_percent` |\r\n| `get-disk` | 磁盘分区信息及读写速率 | `disk_partitions`, `disk_read_bytes_per_sec`, `disk_write_bytes_per_sec` |\r\n| `get-network` | 各网卡收发速率及总速率 | `network_total_recv_bytes_per_sec`, `network_total_send_bytes_per_sec`, `network_interfaces` |\r\n| `get-all` | 以上全部数据 | 以上所有字段 |\r\n\r\n## 编译\r\n\r\n```bash\r\ng++ -std=c++17 system_monitor_win_bytes.cpp -lpdh -liphlpapi -lws2_32 -static -o monitor.exe\r\n```\r\n\r\n## 下载\r\n\r\n- 最新版本：[GitHub Releases](https://github.com/KnotLink-Nodes/system_monitor_win/releases/latest)\r\n- 节点市场：[knotlink.cn/nodes](https://knotlink.cn/nodes)\r\n\r\n## 许可证\r\n\r\nMIT\r\n"
   },
   {
     "id": "ClassIsland-信",
