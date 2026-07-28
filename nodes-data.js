@@ -1,25 +1,25 @@
 /**
  * nodes-data.js — 自动生成，请勿手动编辑
  * 由 build-nodes.js 扫描 nodes/ 文件夹生成
- * 生成时间: 2026-07-28T13:16:06.016Z
+ * 生成时间: 2026-07-28T13:33:33.556Z
  * 节点总数: 8 (插入式: 5, 独立式: 3)
  */
 window.__KNOTLINK_NODES__ = [
   {
-    "id": "Everything_node-HXH",
+    "id": "Everything-HXH",
     "type": "plugin",
     "typeLabel": "插入式",
     "typeIcon": "🧩",
-    "dir": "plugin/Everything_node-HXH",
-    "name": "Everything 搜索节点",
+    "dir": "plugin/Everything-HXH",
+    "name": "Everything 搜索",
     "author": "HXH",
     "version": "v1.0.0",
     "desc": "使用 Everything 搜索引擎执行文件搜索",
     "appId": "com.everything.node",
     "autoStart": "false",
-    "downloadUrl": "https://github.com/hxh230802/Everything_node/releases/latest",
+    "downloadUrl": "https://github.com/KnotLink-Nodes/Everything/releases/latest",
     "exePath": "Everything_node.exe",
-    "appName": "Everything 搜索节点",
+    "appName": "Everything 搜索",
     "specVersion": "1.0",
     "manifestVersion": "1.0.0",
     "sockets": [
@@ -71,7 +71,7 @@ window.__KNOTLINK_NODES__ = [
         ]
       }
     ],
-    "logo": "nodes/plugin/Everything_node-HXH/logo.png",
+    "logo": "nodes/plugin/Everything-HXH/logo.png",
     "readme": "# Everything 搜索节点\r\n\r\n基于 [Everything](https://www.voidtools.com/) 的文件搜索节点，通过 KnotLink OpenSocket 协议提供文件搜索、结果计数和打开文件夹功能。\r\n\r\n## 仓库地址\r\n\r\n- **GitHub**: https://github.com/hxh230802/Everything_node\r\n\r\n## 下载地址\r\n\r\n- https://github.com/hxh230802/Everything_node/releases/latest\r\n\r\n## 功能特性\r\n\r\n- **文件搜索** — 使用 Everything 引擎搜索文件，返回路径列表\r\n- **结果计数** — 仅获取搜索结果数量\r\n- **打开文件夹** — 打开第一个搜索结果的所在文件夹\r\n\r\n## 快速开始\r\n\r\n### 环境要求\r\n\r\n- Windows 10+\r\n- [Everything](https://www.voidtools.com/) 已安装并运行\r\n\r\n### 安装\r\n\r\n```bash\r\n# 下载最新 release 中的 Everything_node.exe\r\n```\r\n\r\n## 技术栈\r\n\r\n- **语言** — Python\r\n- **依赖** — Everything SDK\r\n\r\n## 许可证\r\n\r\nCopyright © 2026 HXH. All rights reserved.\r\n",
     "techs": [
       "语言",
