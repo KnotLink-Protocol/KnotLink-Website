@@ -150,6 +150,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script src="nodes-data.js"></script>
+<script src="recipes-data.js"></script>
 <script>
 function escapeHtml(text) {
     const div = document.createElement('div');
@@ -209,7 +210,8 @@ if (!node) {
                         ${node.author ? `<span>👤 ${node.author}</span>` : ''}
                         ${node.version ? `<span>📦 ${node.version}</span>` : ''}
                         ${node.appId ? `<span style="font-family:var(--font-mono)">🆔 ${node.appId}</span>` : ''}
-                        <a href="nodes/${node.dir}/FuncList.json" download class="btn btn-outline" style="padding:4px 14px;font-size:0.78rem;margin-left:8px">⬇ 下载 FuncList.json</a>
+                        ${node.downloadUrl ? `<a href="${node.downloadUrl}" target="_blank" class="btn btn-primary" style="padding:4px 14px;font-size:0.78rem;margin-left:8px">⬇ 下载节点</a>` : ''}
+                        <a href="nodes/${node.dir}/FuncList.json" download class="btn btn-outline" style="padding:4px 14px;font-size:0.78rem;margin-left:8px">📋 FuncList</a>
                     </div>
                     <p class="node-hero-desc">${node.desc || '暂无描述'}</p>
                 </div>
@@ -335,6 +337,7 @@ if (!node) {
                 ${node.author ? `<tr><td>作者</td><td>${node.author}</td></tr>` : ''}
                 ${node.version ? `<tr><td>版本</td><td>${node.version}</td></tr>` : ''}
                 ${node.exePath ? `<tr><td>可执行文件</td><td>${node.exePath}</td></tr>` : ''}
+                ${node.downloadUrl ? `<tr><td>下载地址</td><td><a href="${node.downloadUrl}" target="_blank" style="color:var(--color-accent)">${node.downloadUrl}</a></td></tr>` : ''}
                 ${node.autoStart !== undefined ? `<tr><td>开机自启</td><td>${node.autoStart === 'true' ? '✅ 是' : '❌ 否'}</td></tr>` : ''}
                 ${node.dir ? `<tr><td>目录</td><td>nodes/${node.dir}</td></tr>` : ''}
                 <tr><td>FuncList</td><td><a href="nodes/${node.dir}/FuncList.json" download style="color:var(--color-accent)">⬇ 下载 FuncList.json</a></td></tr>
@@ -370,6 +373,49 @@ if (!node) {
         readmeContainer.appendChild(readmeBody);
         document.getElementById('nodeContent').appendChild(readmeContainer);
     }
+
+    // =============================================
+    // Related Recipes — 关联配方
+    // =============================================
+    renderRelatedRecipes(node);
+}
+
+function renderRelatedRecipes(node) {
+    const recipes = window.__KNOTLINK_RECIPES__ || [];
+    if (recipes.length === 0) return;
+
+    // Collect all app_ids associated with this node
+    const nodeAppIds = new Set();
+    if (node.appId) nodeAppIds.add(node.appId);
+    if (node.id) nodeAppIds.add(node.id); // also try directory name as fallback
+
+    // Find recipes that link to this node
+    const related = recipes.filter(r =>
+        r.links && r.links.some(l => nodeAppIds.has(l.app_id))
+    );
+
+    if (related.length === 0) return;
+
+    const container = document.getElementById('nodeContent');
+    const section = document.createElement('div');
+    section.className = 'readme-section';
+    section.innerHTML = `
+        <h3>🔗 相关配方 (${related.length})</h3>
+        <p style="color:var(--color-text-dim);font-size:0.86rem;margin-bottom:16px">以下配方可与 ${node.name} 联动</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px">
+            ${related.map(r => `
+                <a href="recipe-detail.html?id=${encodeURIComponent(r.id)}" style="text-decoration:none;color:inherit;background:var(--color-bg-alt);border:1px solid var(--color-border);border-radius:var(--radius-md);padding:16px;transition:all .2s;display:block" onmouseover="this.style.borderColor='rgba(229,165,10,.4)'" onmouseout="this.style.borderColor='var(--color-border)'">
+                    <div style="font-size:1.5rem;margin-bottom:8px">${r.icon}</div>
+                    <div style="font-weight:700;font-size:0.92rem;margin-bottom:4px">${r.name}</div>
+                    <div style="font-size:0.78rem;color:var(--color-text-dim);line-height:1.5;margin-bottom:8px">${r.description}</div>
+                    <div style="display:flex;gap:4px;flex-wrap:wrap">
+                        ${(r.tags || []).slice(0, 3).map(t => `<span style="padding:2px 8px;border-radius:99px;font-size:0.65rem;background:rgba(229,165,10,.1);color:var(--color-accent)">${t}</span>`).join('')}
+                    </div>
+                </a>
+            `).join('')}
+        </div>
+    `;
+    container.appendChild(section);
 }
 </script>
 </body>

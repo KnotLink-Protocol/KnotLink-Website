@@ -16,7 +16,10 @@ const REQUIRED_FILES = {
     plugin: ['plugin_manifest.json', 'FuncList.json', 'logo.png'],
     standalone: ['FuncList.json', 'logo.png'], // manifest 可选，允许其他命名
 };
-const MANIFEST_FIELDS = ['app_id', 'plugin_name', 'author', 'version', 'description'];
+const MANIFEST_FIELDS = {
+    plugin_manifest: ['app_id', 'plugin_name', 'author', 'version', 'description'],
+    standalone_manifest: ['app_id', 'app_name', 'author', 'version', 'description'],
+};
 
 let errors = 0;
 let warnings = 0;
@@ -24,6 +27,18 @@ let warnings = 0;
 function error(msg) { console.error(`  ❌ ${msg}`); errors++; }
 function warn(msg) { console.warn(`  ⚠️  ${msg}`); warnings++; }
 function ok(msg) { console.log(`  ✅ ${msg}`); }
+
+// 倒置域名格式：com.example.app
+const REVERSE_DOMAIN_RE = /^[a-z][a-z0-9]*(\.[a-z][a-z0-9]*)+$/;
+// 旧十六进制格式：0x00000000（兼容）
+const HEX_ID_RE = /^0x[0-9A-Fa-f]{8}$/;
+
+function isValidAppId(id) {
+    return REVERSE_DOMAIN_RE.test(id) || HEX_ID_RE.test(id);
+}
+function isValidSocketId(id) {
+    return /^[a-z][a-z0-9_]*$/.test(id) || HEX_ID_RE.test(id);
+}
 
 function validate() {
     console.log('🔍 KnotLink 节点校验\n');
@@ -75,14 +90,16 @@ function validate() {
             if (manifestFile) {
                 try {
                     const manifest = JSON.parse(fs.readFileSync(manifestFile, 'utf-8'));
-                    for (const field of MANIFEST_FIELDS) {
+                    const manifestType = path.basename(manifestFile).replace('.json', '');
+                    const fields = MANIFEST_FIELDS[manifestType] || MANIFEST_FIELDS['plugin_manifest'];
+                    for (const field of fields) {
                         if (!manifest[field]) {
                             warn(`${path.basename(manifestFile)} 缺少字段: ${field}`);
                         }
                     }
                     // 验证 app_id 格式
-                    if (manifest.app_id && !/^0x[0-9A-Fa-f]{8}$/.test(manifest.app_id)) {
-                        warn(`app_id 格式异常: ${manifest.app_id}（应为 0x 开头 + 8 位十六进制）`);
+                    if (manifest.app_id && !isValidAppId(manifest.app_id)) {
+                        warn(`app_id 格式异常: ${manifest.app_id}（应为倒置域名如 cn.knotlink.xxx，或 0x 开头 + 8 位十六进制）`);
                     }
                 } catch (e) {
                     error(`${path.basename(manifestFile)} JSON 解析失败: ${e.message}`);
@@ -101,8 +118,9 @@ function validate() {
                     if (manifestFile) {
                         try {
                             const manifest = JSON.parse(fs.readFileSync(manifestFile, 'utf-8'));
-                            if (funcList.appName && manifest.plugin_name && funcList.appName !== manifest.plugin_name) {
-                                warn(`FuncList.appName ("${funcList.appName}") 与 manifest.plugin_name ("${manifest.plugin_name}") 不一致`);
+                            const manifestName = manifest.plugin_name || manifest.app_name || '';
+                            if (funcList.appName && manifestName && funcList.appName !== manifestName) {
+                                warn(`FuncList.appName ("${funcList.appName}") 与 manifest 名称 ("${manifestName}") 不一致`);
                             }
                         } catch (e) { /* already reported */ }
                     }
@@ -117,7 +135,7 @@ function validate() {
                                 warn(`接口 "${name}" 缺少 description`);
                             }
                             // 验证 ID 格式
-                            if (sock.openSocketID && !/^0x[0-9A-Fa-f]{8}$/.test(sock.openSocketID)) {
+                            if (sock.openSocketID && !isValidSocketId(sock.openSocketID)) {
                                 warn(`接口 "${name}" openSocketID 格式异常: ${sock.openSocketID}`);
                             }
                         }

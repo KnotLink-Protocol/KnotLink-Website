@@ -64,12 +64,13 @@ function scanNodes() {
             if (fs.existsSync(manifestPath)) {
                 try {
                     const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
-                    nodeData.name = manifest.plugin_name || manifest.name || entry.name;
+                    nodeData.name = manifest.plugin_name || manifest.app_name || manifest.name || entry.name;
                     nodeData.author = manifest.author || '';
                     nodeData.version = manifest.version || '';
                     nodeData.desc = manifest.description || '';
                     nodeData.appId = manifest.app_id || '';
                     nodeData.autoStart = manifest.auto_start || 'false';
+                    nodeData.downloadUrl = manifest.download_url || '';
                     if (manifest.exe_path) nodeData.exePath = manifest.exe_path;
                 } catch (e) {
                     console.warn(`    ⚠️ 解析 manifest 失败: ${e.message}`);
@@ -82,11 +83,12 @@ function scanNodes() {
                 if (fs.existsSync(altManifestPath)) {
                     try {
                         const manifest = JSON.parse(fs.readFileSync(altManifestPath, 'utf-8'));
-                        nodeData.name = manifest.plugin_name || manifest.name || entry.name;
+                        nodeData.name = manifest.plugin_name || manifest.app_name || manifest.name || entry.name;
                         nodeData.author = manifest.author || '';
                         nodeData.version = manifest.version || '';
                         nodeData.desc = manifest.description || '';
                         nodeData.appId = manifest.app_id || '';
+                        nodeData.downloadUrl = manifest.download_url || '';
                     } catch (e) {
                         console.warn(`    ⚠️ 解析备选 manifest 失败: ${e.message}`);
                     }
@@ -232,4 +234,28 @@ window.__KNOTLINK_NODES__ = ${JSON.stringify(nodes, null, 2)};
 
 fs.writeFileSync(OUTPUT_FILE, output, 'utf-8');
 console.log(`📄 已生成: ${OUTPUT_FILE}`);
+
+// ── 轻量索引（Dash 插件市场用，不含 README / FuncList 详情） ──
+const INDEX_FILE = path.join(__dirname, 'nodes-index.json');
+const lightNodes = nodes.map(n => ({
+    id: n.id,
+    name: n.name,
+    type: n.type,
+    typeLabel: n.typeLabel,
+    typeIcon: n.typeIcon,
+    dir: n.dir,
+    author: n.author,
+    version: n.version,
+    desc: n.desc || '',
+    appId: n.appId,
+    downloadUrl: n.downloadUrl || '',
+    logo: n.logo || null,
+    appName: n.appName || n.name,
+    specVersion: n.specVersion || '',
+    manifestVersion: n.manifestVersion || '',
+    socketsCount: Array.isArray(n.sockets) ? n.sockets.length : 0,
+    signalsCount: Array.isArray(n.signals) ? n.signals.length : 0,
+}));
+fs.writeFileSync(INDEX_FILE, JSON.stringify(lightNodes, null, 2), 'utf-8');
+console.log(`📄 已生成: ${INDEX_FILE} (轻量索引, ${JSON.stringify(lightNodes).length} 字节)`);
 console.log('✅ 完成！');

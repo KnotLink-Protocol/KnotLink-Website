@@ -1,6 +1,6 @@
 /**
  * sync-nodes.js
- * 一键同步节点 + 重新生成数据
+ * 一键同步节点 + 配方子模块 + 重新生成数据
  *
  * 用法:
  *   node sync-nodes.js            ← 仅同步 + 构建
@@ -12,7 +12,12 @@ const { execSync } = require('child_process');
 const path = require('path');
 
 const ROOT = __dirname;
-const SUBMODULE_DIR = path.join(ROOT, 'nodes');
+
+// 子模块配置
+const SUBMODULES = [
+    { name: 'nodes',           dir: 'nodes',           build: 'node build-nodes.js',   output: 'nodes-data.js' },
+    { name: 'recipes-market',  dir: 'recipes-market',  build: 'node build-recipes.js', output: 'recipes-data.js' },
+];
 
 function run(cmd, opts = {}) {
     console.log(`  → ${cmd}`);
@@ -26,31 +31,49 @@ async function main() {
     const shouldCommit = args.includes('--commit') || args.includes('--push');
     const shouldPush = args.includes('--push');
 
-    log('🔍 步骤 1/3: 同步节点子模块...');
+    // =============================================
+    // 步骤 1: 同步所有子模块
+    // =============================================
+    const totalSteps = 1 + SUBMODULES.length + (shouldCommit ? 1 : 0);
+    log(`🔍 步骤 1/${totalSteps}: 同步子模块...`);
     try {
         run('git submodule update --init --recursive');
-        run('git pull origin master', { cwd: SUBMODULE_DIR });
+        for (const sub of SUBMODULES) {
+            run(`git pull origin master`, { cwd: path.join(ROOT, sub.dir) });
+        }
         log('✅ 子模块已同步');
     } catch (e) {
         console.error('❌ 子模块同步失败:', e.message);
         process.exit(1);
     }
 
-    log('📦 步骤 2/3: 扫描节点并生成数据...');
-    try {
-        run('node build-nodes.js');
-        log('✅ nodes-data.js 已生成');
-    } catch (e) {
-        console.error('❌ 构建失败:', e.message);
-        process.exit(1);
+    // =============================================
+    // 步骤 2-N: 逐个构建
+    // =============================================
+    for (let i = 0; i < SUBMODULES.length; i++) {
+        const sub = SUBMODULES[i];
+        const stepNum = i + 2;
+        log(`📦 步骤 ${stepNum}/${totalSteps}: 构建 ${sub.name}...`);
+        try {
+            run(sub.build);
+            log(`✅ ${sub.output} 已生成`);
+        } catch (e) {
+            console.error(`❌ ${sub.name} 构建失败:`, e.message);
+            process.exit(1);
+        }
     }
 
+    // =============================================
+    // 最后一步: Git 提交
+    // =============================================
     if (shouldCommit) {
-        log('📝 步骤 3/3: Git 提交...');
+        const stepNum = totalSteps;
+        log(`📝 步骤 ${stepNum}/${totalSteps}: Git 提交...`);
         try {
-            run('git add nodes nodes-data.js');
-            const count = execSync('node -e "console.log(require(\'./nodes-data.js\'.split(\'window.__KNOTLINK_NODES__\')[1] || \'\').length)" || true', { cwd: ROOT }).toString().trim();
-            run(`git commit -m "sync: update nodes submodule, regenerate nodes-data.js" --allow-empty`);
+            const filesToAdd = SUBMODULES.flatMap(s => [s.dir, s.output]);
+            run(`git add ${filesToAdd.join(' ')}`);
+            const msgParts = SUBMODULES.map(s => `update ${s.name} submodule, regenerate ${s.output}`);
+            run(`git commit -m "sync: ${msgParts.join('; ')}" --allow-empty`);
             log('✅ 已提交');
 
             if (shouldPush) {
@@ -62,7 +85,7 @@ async function main() {
             process.exit(1);
         }
     } else {
-        log('⏭  步骤 3/3: 跳过（加 --commit 提交，加 --push 推送）');
+        log('⏭  跳过提交（加 --commit 提交，加 --push 推送）');
     }
 
     log('🎉 全部完成！');

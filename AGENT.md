@@ -10,12 +10,19 @@ Website/
 ├── styles.css           ← 全局样式（金黄色主题 #e5a50a）
 ├── app.js               ← 主页交互
 ├── build-nodes.js       ← 扫描 nodes/ 生成 nodes-data.js
+├── build-recipes.js     ← 扫描 recipes-market/ 生成 recipes-data.js 和 index.json
+├── validate-nodes.js    ← 节点格式校验（CI）
+├── validate-recipes.js  ← 配方格式校验（CI）
+├── sync-nodes.js        ← 一键同步脚本（节点 + 配方 + 构建）
 ├── sync.bat             ← 一键同步脚本（双击运行）
 ├── nodes/               ← git submodule → KNodeIndex
+├── recipes-market/      ← git submodule → KRecipeIndex
 ├── nodes-data.js        ← 自动生成，勿手动编辑
+├── recipes-data.js      ← 自动生成，勿手动编辑
 ├── node-detail.html     ← 节点详情页（?id=xxx）
+├── recipe-detail.html   ← 配方详情页（?id=xxx）
 ├── nodes.html           ← 节点索引页
-├── recipes.html         ← 配方中心
+├── recipes.html         ← 配方中心（支持搜索/标签/按应用筛选）
 ├── tutorials.html       ← 用户教程（链接到 docs.knotlink.cn）
 ├── scenarios.html       ← 典型场景
 ├── compare.html         ← 方案对比
@@ -38,15 +45,21 @@ Website/
 | GitHub 组织 | `https://github.com/KnotLink-Protocol` |
 | SDK | `https://github.com/KnotLink-Protocol/KnotLinkSDK` |
 | 节点仓库 | `https://github.com/KnotLink-Protocol/KNodeIndex` |
+| 配方市场 | `https://github.com/KnotLink-Protocol/KRecipeIndex` |
 
-## 同步节点
+## 同步节点和配方
 
 ```bash
 # 方式一：双击 sync.bat（Windows）
 # 方式二：命令行
 git submodule update --init --recursive
 cd nodes && git pull origin master && cd ..
+cd recipes-market && git pull origin master && cd ..
 node build-nodes.js
+node build-recipes.js
+
+# 或一键执行
+node sync-nodes.js --commit --push
 ```
 
 ## 关键设计决策

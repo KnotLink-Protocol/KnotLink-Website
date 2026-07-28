@@ -230,6 +230,7 @@ function renderNodes(typeFilter = 'all', searchFilter = '') {
             <div class="node-stats">
                 ${socketCount > 0 ? `<span class="node-stat-item">📡 <strong>${socketCount}</strong> 接口</span>` : ''}
                 ${signalCount > 0 ? `<span class="node-stat-item">📶 <strong>${signalCount}</strong> 信号</span>` : ''}
+                ${n.downloadUrl ? `<a href="${n.downloadUrl}" target="_blank" class="node-stat-item" style="text-decoration:none" onclick="event.stopPropagation()" title="下载">⬇️ 下载</a>` : ''}
                 <span class="node-type-badge ${badgeClass}">${n.typeIcon || ''} ${n.typeLabel || n.type}</span>
             </div>
         </div>
