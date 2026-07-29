@@ -1,8 +1,8 @@
 /**
  * nodes-data.js — 自动生成，请勿手动编辑
  * 由 build-nodes.js 扫描 nodes/ 文件夹生成
- * 生成时间: 2026-07-29T00:43:20.075Z
- * 节点总数: 7 (插入式: 5, 独立式: 2)
+ * 生成时间: 2026-07-29T16:16:06.629Z
+ * 节点总数: 8 (插入式: 6, 独立式: 2)
  */
 window.__KNOTLINK_NODES__ = [
   {
@@ -62,17 +62,17 @@ window.__KNOTLINK_NODES__ = [
     "typeLabel": "插入式",
     "typeIcon": "🧩",
     "dir": "plugin/0x00000022",
-    "name": "MultiTTS",
+    "name": "语音合成",
     "author": "HXH",
     "version": "v1.0.0",
-    "desc": "多引擎 TTS 语音合成客户端",
+    "desc": "文字转语音",
     "appId": "0x00000022",
-    "autoStart": "false",
-    "downloadUrl": "https://github.com/hxh230802/MultiTTS_Client/releases/latest",
+    "autoStart": "true",
+    "downloadUrl": "https://github.com/KnotLink-Nodes/MultiTTS/releases/latest",
     "exePath": "MultiTTS_Client.exe",
-    "appName": "MultiTTS",
-    "specVersion": "1.0",
-    "manifestVersion": "1.0.0",
+    "appName": "语音合成",
+    "specVersion": "",
+    "manifestVersion": "",
     "sockets": [
       {
         "name": "SysTTS",
@@ -225,17 +225,17 @@ window.__KNOTLINK_NODES__ = [
     "typeLabel": "插入式",
     "typeIcon": "🧩",
     "dir": "plugin/com.everything.node",
-    "name": "Everything 搜索",
+    "name": "Everthing 搜索",
     "author": "HXH",
-    "version": "v1.0.0",
-    "desc": "使用 Everything 搜索引擎执行文件搜索",
+    "version": "v1.1.0",
+    "desc": "提供文件搜索服务",
     "appId": "com.everything.node",
-    "autoStart": "false",
-    "downloadUrl": "https://github.com/KnotLink-Nodes/Everything/releases/latest",
-    "exePath": "Everything_node.exe",
+    "autoStart": "true",
+    "downloadUrl": "",
+    "exePath": "everything_node.exe",
     "appName": "Everything 搜索",
-    "specVersion": "1.0",
-    "manifestVersion": "1.0.0",
+    "specVersion": "",
+    "manifestVersion": "",
     "sockets": [
       {
         "name": "search",
@@ -298,6 +298,73 @@ window.__KNOTLINK_NODES__ = [
     ]
   },
   {
+    "id": "com.github.hxh230802.getusbserialnumber",
+    "type": "plugin",
+    "typeLabel": "插入式",
+    "typeIcon": "🧩",
+    "dir": "plugin/com.github.hxh230802.getusbserialnumber",
+    "name": "USB 序列号获取",
+    "author": "hxh230802",
+    "version": "v1.0.0",
+    "desc": "获取 USB 可移动驱动器的硬件序列号",
+    "appId": "com.github.hxh230802.getusbserialnumber",
+    "autoStart": "true",
+    "downloadUrl": "https://github.com/KnotLink-Nodes/GetUSBSerialNumber/releases/latest",
+    "exePath": "GetUSBSerialNumber_Qt.exe",
+    "appName": "USB 序列号获取",
+    "specVersion": "1.0",
+    "manifestVersion": "1.0.0",
+    "sockets": [
+      {
+        "name": "get-serial",
+        "id": "usb",
+        "desc": "获取指定盘符的 USB 硬件序列号",
+        "args": [
+          {
+            "name": "action",
+            "type": "static",
+            "desc": "命令类型（固定为 get-serial）",
+            "default": ""
+          },
+          {
+            "name": "drive",
+            "type": "input",
+            "desc": "盘符（单个字母，如 G、H）",
+            "default": "G"
+          }
+        ],
+        "returns": [
+          [
+            "USB 硬件序列号",
+            "serial"
+          ]
+        ]
+      },
+      {
+        "name": "list-drives",
+        "id": "usb",
+        "desc": "列出所有已连接的可移动驱动器及其序列号",
+        "args": [
+          {
+            "name": "action",
+            "type": "static",
+            "desc": "命令类型（固定为 list-drives）",
+            "default": ""
+          }
+        ],
+        "returns": [
+          [
+            "驱动器列表（JSON 数组，含 drive/name/serial）",
+            "drives"
+          ]
+        ]
+      }
+    ],
+    "logo": "nodes/plugin/com.github.hxh230802.getusbserialnumber/logo.png",
+    "readme": "# USB 序列号获取 (GetUSBSerialNumber)\r\n\r\n获取 USB 可移动驱动器的硬件序列号，支持指定盘符查询和列出所有可移动驱动器。\r\n\r\n---\r\n\r\n## 功能\r\n\r\n| 接口 | 说明 |\r\n|------|------|\r\n| `get-serial` | 获取指定盘符的 USB 硬件序列号，参数 `drive`（盘符字母，如 G、H） |\r\n| `list-drives` | 列出所有已连接的可移动驱动器及其序列号，返回 JSON 数组 |\r\n\r\n---\r\n\r\n## 安装\r\n\r\n1. 将 zip 包拖入 KnotHub 操作面板\r\n2. 节点将自动注册为后台服务（`auto_start: true`）\r\n\r\n---\r\n\r\n## 接口详情\r\n\r\n### get-serial — 获取指定盘符的 USB 硬件序列号\r\n\r\n- **AppID**: `com.github.hxh230802.getusbserialnumber`\r\n- **SocketID**: `usb`\r\n\r\n参数：\r\n\r\n| 参数 | 类型 | 说明 |\r\n|------|------|------|\r\n| action | static | 固定为 `get-serial` |\r\n| drive | input | 盘符字母，默认 `G` |\r\n\r\n返回：\r\n\r\n| 字段 | 说明 |\r\n|------|------|\r\n| serial | USB 硬件序列号 |\r\n\r\n### list-drives — 列出所有可移动驱动器\r\n\r\n参数：\r\n\r\n| 参数 | 类型 | 说明 |\r\n|------|------|------|\r\n| action | static | 固定为 `list-drives` |\r\n\r\n返回：\r\n\r\n| 字段 | 说明 |\r\n|------|------|\r\n| drives | JSON 数组，每项含 `drive`（盘符）、`name`（卷标）、`serial`（硬件序列号） |\r\n\r\n---\r\n\r\n## 下载\r\n\r\n<https://github.com/KnotLink-Nodes/GetUSBSerialNumber/releases/latest>\r\n\r\n---\r\n\r\n## 技术栈\r\n\r\n- Qt 5 (C++)\r\n- KnotLink SDK (OpenSocketResponser)\r\n- Windows API (DeviceIoControl / IOCTL_STORAGE_QUERY_PROPERTY)\r\n\r\n---\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n---\r\n\r\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\r\n",
+    "techs": []
+  },
+  {
     "id": "com.github.hxh230802.sysoperatetool",
     "type": "plugin",
     "typeLabel": "插入式",
@@ -305,7 +372,7 @@ window.__KNOTLINK_NODES__ = [
     "dir": "plugin/com.github.hxh230802.sysoperatetool",
     "name": "系统操作工具",
     "author": "hxh230802",
-    "version": "v1.0.0",
+    "version": "v1.2.0",
     "desc": "系统操作工具，支持关机、睡眠、锁屏、音量控制、窗口管理",
     "appId": "com.github.hxh230802.sysoperatetool",
     "autoStart": "false",
@@ -568,7 +635,7 @@ window.__KNOTLINK_NODES__ = [
     "desc": "Windows 系统资源监控，支持 CPU、内存、磁盘 I/O、网络速率实时采集",
     "appId": "com.github.hxh230802.systemmonitor",
     "autoStart": "false",
-    "downloadUrl": "https://github.com/KnotLink-Nodes/system_monitor_win/releases/latest",
+    "downloadUrl": "https://github.com/KnotLink-Nodes/SystemMonitor/releases/latest",
     "exePath": "monitor.exe",
     "appName": "系统监控",
     "specVersion": "1.0",
